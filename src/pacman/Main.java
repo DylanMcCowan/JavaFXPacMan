@@ -9,11 +9,13 @@ import javafx.stage.Stage;
  */
 public class Main extends Application
 {
-
+    private MazeLevel level;
 
     public void start (Stage stage)
     {
-
+        this.level = new MazeLevel();
+        stage.setScene(this.level.maze);
+        stage.show();
     }
 
     public static void main (String[] args)
