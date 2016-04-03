@@ -2,6 +2,7 @@ package pacman;
 
 import java.util.Random;
 import java.util.Scanner;
+import javafx.scene.shape.SVGPath;
 
 /**
  *
@@ -11,6 +12,8 @@ public class Ghost extends MoveableEntity
 {
     boolean isVisible;
     String name;
+    SVGPath svg;
+    SVGPath spawn;
 
     public Ghost ()
     {
@@ -42,12 +45,20 @@ public class Ghost extends MoveableEntity
     public void move(){
         switch(this.name){
             case "Blinky":
+                this.spawn = new SVGPath();
+                spawn.setContent("/assets/pathData/spawnPath");
                 selectPath();
             case "Pinky":
+                this.spawn = new SVGPath();
+                spawn.setContent("/assets/pathData/spawnPath");
                 selectPath();
             case "Inky":
+                this.spawn = new SVGPath();
+                spawn.setContent("/assets/pathData/spawnPath");
                 selectPath();
             case "Clyde":
+                this.spawn = new SVGPath();
+                spawn.setContent("/assets/pathData/spawnPath");
                 selectPath();
             default:break;
         }
@@ -55,19 +66,19 @@ public class Ghost extends MoveableEntity
     
     public void selectPath(){
         Random rnd = new Random();
-        int path = rnd.nextInt(3);
+        int path = rnd.nextInt(2);
         switch(path){
             case 0:
-                //set path here
+                this.svg = new SVGPath();
+                svg.setContent("/assets/pathData/path1");
                 ;
             case 1:
-                //set path here
+                this.svg = new SVGPath();
+                svg.setContent("/assets/pathData/path2");
                 ;
             case 2:
-                //set path here
-                ;
-            case 3:
-                //set path here
+                this.svg = new SVGPath();
+                svg.setContent("/assets/pathData/path3");
                 ;
         }
     }
