@@ -1,27 +1,40 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package pacman;
 
 /**
  *
  * @author KevinCamp
  */
-public class PacDot implements Entity {
-     boolean isVisible;
-   String name;
-   
-   public void setId(String name){
-       this.name=name;
-   }
-   
-   public String getId(){
-       return this.name;
-   }
-   
-   public boolean visible(){
-       return isVisible;
-   }
+public class PacDot implements Entity
+{
+    protected boolean isVisible;
+    public String name;
+
+
+    //Constructor to initalize the creation of a PacDot
+    public PacDot ()
+    {
+
+    }
+
+    public void setId (String name)
+    {
+        this.name = name;
+    }
+
+    public String getId ()
+    {
+        return this.name;
+    }
+
+    @Override
+    public boolean isVisible ()
+    {
+        return this.isVisible;
+    }
+
+    @Override
+    public void update ()
+    {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 }
