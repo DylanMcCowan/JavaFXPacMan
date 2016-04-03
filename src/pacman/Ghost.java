@@ -19,6 +19,10 @@ public class Ghost extends MoveableEntity
     {
 
     }
+    
+    public Ghost (String name){
+        this.name= name;
+    }
 
     public void setId (String name)
     {
