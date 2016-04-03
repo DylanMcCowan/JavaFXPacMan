@@ -11,9 +11,9 @@ package pacman;
  */
 public class PacMan extends MoveableEntity
 {
-
     boolean isVisible;
     String name;
+    boolean isDead;
 
     public PacMan ()
     {
@@ -40,5 +40,10 @@ public class PacMan extends MoveableEntity
     public void update ()
     {
         throw new UnsupportedOperationException("Not supported yet.");
+    }
+    
+    public void isDead(){
+        this.isDead =true;
+        this.isVisible=false;
     }
 }
