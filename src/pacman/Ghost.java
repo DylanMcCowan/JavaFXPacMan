@@ -2,6 +2,8 @@ package pacman;
 
 import java.util.Random;
 import java.util.Scanner;
+
+import javafx.geometry.Rectangle2D;
 import javafx.scene.shape.SVGPath;
 
 /**
@@ -27,6 +29,12 @@ public class Ghost extends MoveableEntity
     public void setId (String name)
     {
         this.name = name;
+    }
+
+    //TODO Insert Correct Sprite Bounds
+    @Override
+    public Rectangle2D getSprite() {
+        return null;
     }
 
     public String getId ()
