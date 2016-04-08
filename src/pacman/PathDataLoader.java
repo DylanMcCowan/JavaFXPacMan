@@ -10,21 +10,21 @@ import java.util.Scanner;
  */
 public class PathDataLoader {
 
-    public PathDataLoader(String pathName)
+    public PathDataLoader()
     {
     }
 
     //TODO Redevelop this so it doesn't suck
     public String getPathData(File pFile)
     {
-        String pData = null;
+        String pData = "";
 
         if(pFile.isFile()) {
-            try (Scanner scan = new Scanner(pFile)) {
+            try (Scanner scan = new Scanner(pFile.getAbsoluteFile())) {
 
                 //TODO Verify that this does read the last line of the path data file
                 while(scan.hasNext()){
-                    pData += scan.next();
+                    pData += scan.nextLine();
                 }
 
                 scan.close();
@@ -33,6 +33,9 @@ public class PathDataLoader {
             }
         }else{
             System.out.println("Not A File!");
+            System.out.println(pFile.isDirectory());
+            System.out.println(pFile.exists());
+            System.out.println(pFile.getName());
         }
         //TODO Modify appropriately
         return pData;
