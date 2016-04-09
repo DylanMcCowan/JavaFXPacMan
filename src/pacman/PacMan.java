@@ -73,41 +73,33 @@ if(circleObject.intersects(wallObject)){
 
 public void moveToLeft (Circle circle)
 {
-if(collisionDetection()==true){
-    circle.setTranslateX(circle.getTranslateX() +15);
-}
-else{
 circle.setTranslateX(circle.getTranslateX() - 10);
+if(collisionDetection()==true){
+    circle.setTranslateX(circle.getTranslateX() +10);
 }
 }
 
 public void moveToRight (Circle circle)
 {
-if(collisionDetection()==true){
-    circle.setTranslateX(circle.getTranslateX() -15);
-}
-else{
 circle.setTranslateX(circle.getTranslateX() + 10);
+if(collisionDetection()==true){
+    circle.setTranslateX(circle.getTranslateX() -10);
 }
 }
 
 public void moveDown (Circle circle)
 {
-if(collisionDetection()==true){
-    circle.setTranslateY(circle.getTranslateY() -15);
-}
-else{
 circle.setTranslateY(circle.getTranslateY() + 10);
+if(collisionDetection()==true){
+    circle.setTranslateY(circle.getTranslateY() -10);
 }
 }
 
 public void moveUp (Circle circle)
 {
-if(collisionDetection()==true){
-    circle.setTranslateY(circle.getTranslateY() +15);
-}
-else{
 circle.setTranslateY(circle.getTranslateY() - 10);
+if(collisionDetection()==true){
+    circle.setTranslateY(circle.getTranslateY() +10);
 }
 }
 
