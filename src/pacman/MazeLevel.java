@@ -1,11 +1,17 @@
 package pacman;
 
+import javafx.animation.Interpolator;
+import javafx.animation.KeyFrame;
+import javafx.animation.PathTransition;
+import javafx.animation.Timeline;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import javafx.scene.shape.SVGPath;
+import javafx.util.Duration;
 
 /**
  * Created by dylan on 2016-04-03.
@@ -17,9 +23,20 @@ public class MazeLevel {
    private Scene maze;
    private Pane paneMaze;
 
+    //TODO Use an Array for the PacDots and Ghosts.
     //Maze Entities
     private PacMan pacMan;
     private ImageView pacManImgView;
+    private Ghost blinky;
+    private ImageView blinkyImgView;
+
+    //ANIMATION
+    Timeline tl;
+    KeyFrame kf;
+    PathTransition pth;
+    SVGPath svgPath = new SVGPath();
+
+
 
     //MAIN SPRITE IMAGE
     Image spriteImage;
@@ -45,12 +62,29 @@ public class MazeLevel {
         this.pacManImgView = new ImageView(this.spriteImage);
         this.pacManImgView.setViewport(this.pacMan.getSprite());
 
+        this.blinky = new Ghost(GhostNames.CLYDE);
+        this.blinkyImgView = new ImageView(this.spriteImage);
+        this.blinkyImgView.setViewport(this.blinky.getSprite());
+
         addToMaze(this.imgMaze);
         addToMaze(this.pacManImgView);
+        addToMaze(this.blinkyImgView);
+
+        this.svgPath.setContent(pdl.getPathData(ftmp.loadPathFile("./src/assets/pathData/path2.txt")));
+
+        //Path Transition and Controlling Sprites
+        this.pth = new PathTransition();
+        this.pth.setNode(this.blinkyImgView);
+        this.pth.setPath(this.svgPath);
+        this.pth.setInterpolator(Interpolator.LINEAR);
+
+        this.pth.setDuration(Duration.seconds(25));
+        this.pth.setCycleCount(Timeline.INDEFINITE);
+        this.pth.setAutoReverse(true);
+        this.pth.play();
+
 
         this.maze = new Scene(paneMaze, 540, 490);
-
-        System.out.println(pdl.getPathData(ftmp.loadPathFile("./src/assets/pathData/spawnPath.txt")));
 
     }
 
