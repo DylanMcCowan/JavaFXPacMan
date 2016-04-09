@@ -16,6 +16,7 @@ public class PacDot implements Entity
     public PacDot ()
     {
 
+
     }
 
     public void setId (String name)
@@ -26,7 +27,7 @@ public class PacDot implements Entity
     //TODO Insert Correct Sprite Bounds
     @Override
     public Rectangle2D getSprite() {
-        return null;
+        return new Rectangle2D(635, 156, 24,24);
     }
 
     public String getId ()
