@@ -10,7 +10,9 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.SVGPath;
 import javafx.util.Duration;
@@ -54,8 +56,8 @@ public class MazeLevel {
 
     public MazeLevel()
     {
-        Rectangle GamesSpace = new Rectangle(900,600);
-
+        Rectangle GamesSpace = new Rectangle(1199, 799);
+        this.paneMaze = new StackPane();
 //Spawn
         Rectangle l1 = new Rectangle(300, 20);
         l1.setFill(Color.BLUE);
@@ -115,7 +117,7 @@ public class MazeLevel {
         l17.setFill(Color.BLUE);
         l17.setTranslateY(55);
         l17.setTranslateX(-100);
-//top
+        //top
         Rectangle l14 = new Rectangle(20, 240);
         l14.setFill(Color.BLUE);
         l14.setTranslateY(-140);
@@ -129,7 +131,120 @@ public class MazeLevel {
         l18.setTranslateY(-70);
         Rectangle l19 = new Rectangle(300, 90);
         l19.setFill(Color.BLUE);
-        l19.setTranslateY(-215);;
+        l19.setTranslateY(-215);
+
+        //pacdots
+        Circle[] pacdots = new Circle[100];
+        double width = 12;
+        int Xpos = -420;
+        int Ypos = -280;
+        for (int i = 0; i < 13; i++) {
+            pacdots[i] = new Circle(width);
+            pacdots[i].setTranslateX(Xpos);
+            pacdots[i].setTranslateY(Ypos);
+            pacdots[i].setFill(Color.GREEN);
+            this.paneMaze.getChildren().add(pacdots[i]);
+            Xpos += 70;
+        }
+        Xpos -= 70;
+        for (int i = 13; i < 22; i++) {
+            pacdots[i] = new Circle(width);
+            pacdots[i].setTranslateX(Xpos);
+            pacdots[i].setTranslateY(Ypos);
+            pacdots[i].setFill(Color.GREEN);
+            this.paneMaze.getChildren().add(pacdots[i]);
+            Ypos += 70;
+        }
+        Xpos = -420;
+        Ypos = -280;
+        for (int i = 22; i < 31; i++) {
+            pacdots[i] = new Circle(width);
+            pacdots[i].setTranslateX(Xpos);
+            pacdots[i].setTranslateY(Ypos);
+            pacdots[i].setFill(Color.GREEN);
+            this.paneMaze.getChildren().add(pacdots[i]);
+            Ypos += 70;
+        }
+        Xpos = -350;
+        Ypos = 20;
+        for (int i = 31; i < 42; i++) {
+            pacdots[i] = new Circle(width);
+            pacdots[i].setTranslateX(Xpos);
+            pacdots[i].setTranslateY(Ypos);
+            pacdots[i].setFill(Color.GREEN);
+            this.paneMaze.getChildren().add(pacdots[i]);
+            Xpos += 70;
+        }
+        Xpos = 175;
+        Ypos = -230;
+        for (int i = 42; i < 50; i++) {
+            pacdots[i] = new Circle(width);
+            pacdots[i].setTranslateX(Xpos);
+            pacdots[i].setTranslateY(Ypos);
+            pacdots[i].setFill(Color.GREEN);
+            this.paneMaze.getChildren().add(pacdots[i]);
+            Ypos += 70;
+        }
+        Xpos = 250;
+        Ypos = -230;
+        for (int i = 50; i < 58; i++) {
+            pacdots[i] = new Circle(width);
+            pacdots[i].setTranslateX(Xpos);
+            pacdots[i].setTranslateY(Ypos);
+            pacdots[i].setFill(Color.GREEN);
+            this.paneMaze.getChildren().add(pacdots[i]);
+            Ypos += 70;
+        }
+        Xpos = -250;
+        Ypos = -230;
+        for (int i = 58; i < 66; i++) {
+            pacdots[i] = new Circle(width);
+            pacdots[i].setTranslateX(Xpos);
+            pacdots[i].setTranslateY(Ypos);
+            pacdots[i].setFill(Color.GREEN);
+            this.paneMaze.getChildren().add(pacdots[i]);
+            Ypos += 70;
+        }
+        Xpos = -175;
+        Ypos = -230;
+        for (int i = 66; i < 76; i++) {
+            pacdots[i] = new Circle(width);
+            pacdots[i].setTranslateX(Xpos);
+            pacdots[i].setTranslateY(Ypos);
+            pacdots[i].setFill(Color.GREEN);
+            this.paneMaze.getChildren().add(pacdots[i]);
+            Ypos += 70;
+        }
+        Xpos = -120;
+        Ypos = -140;
+        for (int i = 76; i < 80; i++) {
+            pacdots[i] = new Circle(width);
+            pacdots[i].setTranslateX(Xpos);
+            pacdots[i].setTranslateY(Ypos);
+            pacdots[i].setFill(Color.GREEN);
+            this.paneMaze.getChildren().add(pacdots[i]);
+            Xpos += 70;
+        }
+        Xpos = -120;
+        Ypos = 210;
+        for (int i = 80; i < 84; i++) {
+            pacdots[i] = new Circle(width);
+            pacdots[i].setTranslateX(Xpos);
+            pacdots[i].setTranslateY(Ypos);
+            pacdots[i].setFill(Color.GREEN);
+            this.paneMaze.getChildren().add(pacdots[i]);
+            Xpos += 70;
+        }
+        Xpos = -120;
+        Ypos = 280;
+        for (int i = 84; i < 88; i++) {
+            pacdots[i] = new Circle(width);
+            pacdots[i].setTranslateX(Xpos);
+            pacdots[i].setTranslateY(Ypos);
+            pacdots[i].setFill(Color.GREEN);
+            this.paneMaze.getChildren().add(pacdots[i]);
+            Xpos += 70;
+        }
 
 mazeRect = new Rectangle[19];
 
@@ -194,42 +309,41 @@ for(int i =1; i < mazeRect.length;i++){
         
     }
 }
-        this.paneMaze = new Pane();
+
+
 
         this.spriteImage = getSpriteImagePath("assets/img/PacManSprite.png");
 
 //        this.imgMaze = new ImageView(this.spriteImage);
 //        this.imgMaze.setViewport(getMazeSprite());
 
-//        this.pacMan = new PacMan();
-//        this.pacManImgView = new ImageView(this.spriteImage);
-//        this.pacManImgView.setViewport(this.pacMan.getSprite());
+        this.pacMan = new PacMan();
+        this.pacManImgView = new ImageView(this.spriteImage);
+        this.pacManImgView.setViewport(this.pacMan.getSprite());
 
 //        this.blinky = new Ghost(GhostNames.CLYDE);
 //        this.blinkyImgView = new ImageView(this.spriteImage);
 //        this.blinkyImgView.setViewport(this.blinky.getSprite());
 
        // addToMaze(this.imgMaze);
-       // addToMaze(this.pacManImgView);
+        addToMaze(this.pacManImgView);
        // addToMaze(this.blinkyImgView);
 
-//        this.svgPath.setContent(pdl.getPathData(ftmp.loadPathFile("./src/assets/pathData/path2.txt")));
+        this.svgPath.setContent(pdl.getPathData(ftmp.loadPathFile("./src/assets/pathData/path2.txt")));
 //
 //        //Path Transition and Controlling Sprites
-//        this.pth = new PathTransition();
-//        this.pth.setNode(this.blinkyImgView);
-//        this.pth.setPath(this.svgPath);
-//        this.pth.setInterpolator(Interpolator.LINEAR);
-//
-//        this.pth.setDuration(Duration.seconds(25));
-//        this.pth.setCycleCount(Timeline.INDEFINITE);
-//        this.pth.setAutoReverse(true);
-//        this.pth.play();
+        this.pth = new PathTransition();
+        this.pth.setNode(this.pacManImgView);
+        this.pth.setPath(this.svgPath);
+        this.pth.setInterpolator(Interpolator.LINEAR);
+        this.pth.setDuration(Duration.seconds(25));
+        this.pth.setCycleCount(Timeline.INDEFINITE);
+        this.pth.setAutoReverse(true);
+        //this.pth.play();
 
         for (int i = 1; i < this.mazeRect.length; i++) {
             this.paneMaze.getChildren().add(this.mazeRect[i]);
         }
-
 
         this.maze = new Scene(this.paneMaze, 900, 600);
 
