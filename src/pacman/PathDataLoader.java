@@ -32,10 +32,6 @@ public class PathDataLoader {
                 e.printStackTrace();
             }
         }else{
-            System.out.println("Not A File!");
-            System.out.println(pFile.isDirectory());
-            System.out.println(pFile.exists());
-            System.out.println(pFile.getName());
         }
         //TODO Modify appropriately
         return pData;
