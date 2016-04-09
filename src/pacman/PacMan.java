@@ -11,7 +11,7 @@ import javafx.geometry.Rectangle2D;
  *
  * @author KevinCamp
  */
-public class PacMan extends MoveableEntity
+public class PacMan extends MovableEntity
 {
     boolean isVisible;
     String name;
