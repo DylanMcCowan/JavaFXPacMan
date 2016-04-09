@@ -1,32 +1,62 @@
 package pacman;
 
 import java.util.Random;
-import java.util.Scanner;
+
+import javafx.geometry.Rectangle2D;
 import javafx.scene.shape.SVGPath;
+
+
+/**
+ * @author dylan
+ */
+enum GhostNames
+{
+    BLINKY, PINKY, CLYDE, INKY,
+}
+
 
 /**
  *
  * @author KevinCamp
  */
-public class Ghost extends MoveableEntity
+public class Ghost extends MovableEntity
 {
     boolean isVisible;
     String name;
-    SVGPath svg;
-    SVGPath spawn;
+    SVGPath svgPath;
+    SVGPath spawnPath;
 
-    public Ghost ()
+    public Ghost (Enum GHOST_NAME)
     {
+        this.setId(GHOST_NAME.name());
+        this.svgPath = new SVGPath();
+        this.spawnPath = new SVGPath();
 
-    }
-    
-    public Ghost (String name){
-        this.name= name;
+        setInitialPath();
     }
 
-    public void setId (String name)
+    @Override
+     public void setId (String name)
     {
         this.name = name;
+    }
+
+    @Override
+    public Rectangle2D getSprite() {
+
+        switch(this.getId())
+        {
+            case "BLINKY":
+                return new Rectangle2D(615, 117, 32,32);
+            case "PINKY":
+                return new Rectangle2D(615, 80, 32, 32);
+            case "INKY":
+                return new Rectangle2D(615, 45, 32, 32);
+            case "CLYDE":
+                return new Rectangle2D(615, 45, 32,32);
+            default:
+                return new Rectangle2D(585, 230, 32,32);
+        }
     }
 
     public String getId ()
@@ -46,44 +76,41 @@ public class Ghost extends MoveableEntity
         throw new UnsupportedOperationException("Not supported yet.");
     }
     
-    public void move(){
-        switch(this.name){
-            case "Blinky":
-                this.spawn = new SVGPath();
-                spawn.setContent("/assets/pathData/spawnPath");
+    private void setInitialPath(){
+        switch(this.getId()){
+            case "BLINKY":
+                this.spawnPath.setContent("/assets/pathData/spawnPath");
                 selectPath();
-            case "Pinky":
-                this.spawn = new SVGPath();
-                spawn.setContent("/assets/pathData/spawnPath");
+            case "PINKY":
+                this.spawnPath.setContent("/assets/pathData/spawnPath");
                 selectPath();
-            case "Inky":
-                this.spawn = new SVGPath();
-                spawn.setContent("/assets/pathData/spawnPath");
+            case "INKY":
+                this.spawnPath.setContent("/assets/pathData/spawnPath");
                 selectPath();
-            case "Clyde":
-                this.spawn = new SVGPath();
-                spawn.setContent("/assets/pathData/spawnPath");
+            case "CLYDE":
+                this.spawnPath.setContent("/assets/pathData/spawnPath");
                 selectPath();
             default:break;
         }
     }
     
-    public void selectPath(){
+    private void selectPath(){
+
         Random rnd = new Random();
         int path = rnd.nextInt(2);
         switch(path){
             case 0:
-                this.svg = new SVGPath();
-                svg.setContent("/assets/pathData/path1");
-                ;
+                this.svgPath = new SVGPath();
+                this.svgPath.setContent("/assets/pathData/path1.txt");
+                break;
             case 1:
-                this.svg = new SVGPath();
-                svg.setContent("/assets/pathData/path2");
-                ;
+                this.svgPath = new SVGPath();
+                this.svgPath.setContent("/assets/pathData/path2.txt");
+                break;
             case 2:
-                this.svg = new SVGPath();
-                svg.setContent("/assets/pathData/path3");
-                ;
+                this.svgPath = new SVGPath();
+                this.svgPath.setContent("/assets/pathData/path3.txt");
+                break;
         }
     }
 }

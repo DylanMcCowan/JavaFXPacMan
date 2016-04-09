@@ -1,5 +1,7 @@
 package pacman;
 
+import javafx.geometry.Rectangle2D;
+
 /**
  *
  * @author KevinCamp
@@ -14,11 +16,18 @@ public class PacDot implements Entity
     public PacDot ()
     {
 
+
     }
 
     public void setId (String name)
     {
         this.name = name;
+    }
+
+    //TODO Insert Correct Sprite Bounds
+    @Override
+    public Rectangle2D getSprite() {
+        return new Rectangle2D(635, 156, 24,24);
     }
 
     public String getId ()

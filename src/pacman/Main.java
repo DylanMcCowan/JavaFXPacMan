@@ -14,7 +14,7 @@ public class Main extends Application
     public void start (Stage stage)
     {
         this.level = new MazeLevel();
-        stage.setScene(this.level.maze);
+        stage.setScene(this.level.getScene());
         stage.show();
     }
 

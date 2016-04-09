@@ -5,11 +5,13 @@
  */
 package pacman;
 
+import javafx.geometry.Rectangle2D;
+
 /**
  *
  * @author KevinCamp
  */
-public class PacMan extends MoveableEntity
+public class PacMan extends MovableEntity
 {
     boolean isVisible;
     String name;
@@ -17,12 +19,18 @@ public class PacMan extends MoveableEntity
 
     public PacMan ()
     {
-
+        getSprite();
     }
 
     public void setId (String name)
     {
         this.name = name;
+    }
+
+    //TODO Insert Correct Sprite Bounds
+    @Override
+    public Rectangle2D getSprite() {
+        return new Rectangle2D(607, 344, 32,32);
     }
 
     public String getId ()
@@ -41,7 +49,8 @@ public class PacMan extends MoveableEntity
     {
         throw new UnsupportedOperationException("Not supported yet.");
     }
-    
+
+    //TODO Change this to make it not incorrect
     public void isDead(){
         this.isDead =true;
         this.isVisible=false;
