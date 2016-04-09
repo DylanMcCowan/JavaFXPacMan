@@ -54,7 +54,8 @@ public class MazeLevel {
 
     public MazeLevel()
     {
-        Rectangle GamesSpace = new Rectangle(1199, 799);
+        Rectangle GamesSpace = new Rectangle(900,600);
+
 //Spawn
         Rectangle l1 = new Rectangle(300, 20);
         l1.setFill(Color.BLUE);
@@ -131,7 +132,8 @@ public class MazeLevel {
         l19.setTranslateY(-215);;
 
 mazeRect = new Rectangle[19];
-for(int i =1; i < 19;i++){
+
+for(int i =1; i < mazeRect.length;i++){
     switch(i){
         case 1:
             mazeRect[i] = l1;
@@ -187,44 +189,49 @@ for(int i =1; i < 19;i++){
             break;
         case 18:
             mazeRect[i] = l18;
+            System.out.println("Final Added");
             break;
         
     }
 }
         this.paneMaze = new Pane();
 
-        this.spriteImage = getSpriteImagePath("JavaFXPacMan/assets/img/PacManSprite.png");
+        this.spriteImage = getSpriteImagePath("assets/img/PacManSprite.png");
 
-        this.imgMaze = new ImageView(this.spriteImage);
-        this.imgMaze.setViewport(getMazeSprite());
+//        this.imgMaze = new ImageView(this.spriteImage);
+//        this.imgMaze.setViewport(getMazeSprite());
 
-        this.pacMan = new PacMan();
-        this.pacManImgView = new ImageView(this.spriteImage);
-        this.pacManImgView.setViewport(this.pacMan.getSprite());
+//        this.pacMan = new PacMan();
+//        this.pacManImgView = new ImageView(this.spriteImage);
+//        this.pacManImgView.setViewport(this.pacMan.getSprite());
 
-        this.blinky = new Ghost(GhostNames.CLYDE);
-        this.blinkyImgView = new ImageView(this.spriteImage);
-        this.blinkyImgView.setViewport(this.blinky.getSprite());
+//        this.blinky = new Ghost(GhostNames.CLYDE);
+//        this.blinkyImgView = new ImageView(this.spriteImage);
+//        this.blinkyImgView.setViewport(this.blinky.getSprite());
 
-        addToMaze(this.imgMaze);
-        addToMaze(this.pacManImgView);
-        addToMaze(this.blinkyImgView);
+       // addToMaze(this.imgMaze);
+       // addToMaze(this.pacManImgView);
+       // addToMaze(this.blinkyImgView);
 
-        this.svgPath.setContent(pdl.getPathData(ftmp.loadPathFile("./src/assets/pathData/path2.txt")));
+//        this.svgPath.setContent(pdl.getPathData(ftmp.loadPathFile("./src/assets/pathData/path2.txt")));
+//
+//        //Path Transition and Controlling Sprites
+//        this.pth = new PathTransition();
+//        this.pth.setNode(this.blinkyImgView);
+//        this.pth.setPath(this.svgPath);
+//        this.pth.setInterpolator(Interpolator.LINEAR);
+//
+//        this.pth.setDuration(Duration.seconds(25));
+//        this.pth.setCycleCount(Timeline.INDEFINITE);
+//        this.pth.setAutoReverse(true);
+//        this.pth.play();
 
-        //Path Transition and Controlling Sprites
-        this.pth = new PathTransition();
-        this.pth.setNode(this.blinkyImgView);
-        this.pth.setPath(this.svgPath);
-        this.pth.setInterpolator(Interpolator.LINEAR);
-
-        this.pth.setDuration(Duration.seconds(25));
-        this.pth.setCycleCount(Timeline.INDEFINITE);
-        this.pth.setAutoReverse(true);
-        this.pth.play();
+        for (int i = 1; i < this.mazeRect.length; i++) {
+            this.paneMaze.getChildren().add(this.mazeRect[i]);
+        }
 
 
-        this.maze = new Scene(paneMaze, 540, 490);
+        this.maze = new Scene(this.paneMaze, 900, 600);
 
     }
 
