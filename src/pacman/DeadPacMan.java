@@ -1,6 +1,7 @@
 package pacman;
 
 import javafx.geometry.Rectangle2D;
+import javafx.scene.image.ImageView;
 
 /**
  *
@@ -24,7 +25,7 @@ public class DeadPacMan implements Entity
     //TODO Insert Correct Sprite Bounds
     @Override
     public Rectangle2D getSprite() {
-        return null;
+        return new Rectangle2D(585, 230, 32,32);
     }
 
     public String getId ()
@@ -37,6 +38,7 @@ public class DeadPacMan implements Entity
     {
         return this.isVisible;
     }
+
 
     @Override
     public void update ()
