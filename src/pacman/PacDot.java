@@ -24,7 +24,7 @@ public class PacDot implements Entity
     {
         //pacdots
         Circle[] pacdots = new Circle[88];
-        double width = 12;
+        double width = 5;
         int Xpos = -420;
         int Ypos = -280;
         for (int i = 0; i < 13; i++) {
