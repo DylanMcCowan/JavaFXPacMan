@@ -30,9 +30,9 @@ public class MazeLevel {
 
     //MazeData
     private Rectangle[] mazeData;
-
     private Circle[] pacdots;
     private Bounds[] pacDotBounds;
+    private Bounds pacManBounds;
 
     //TODO Use an Array for the PacDots and Ghosts.
     //Maze Entities
@@ -53,11 +53,8 @@ public class MazeLevel {
     //MAIN SPRITE IMAGE
     Image spriteImage;
 
-
-    //TODO This is only for testing
-    FileLoader ftmp = new FileLoader();
-    PathDataLoader pdl = new PathDataLoader();
-    //ImageView
+    //Level PacDot Number Count
+    protected int pacdotCount;
 
     public MazeLevel() {
 
@@ -82,21 +79,20 @@ public class MazeLevel {
         this.pacManImgView.setViewport(this.pacMan.getSprite());
         this.pacMan.setup(this.pacManImgView);
 
-
-        addToMaze(this.pacManImgView);
-
-        addToMaze(this.blinkyImgView);
-        addToMaze(this.pinkyImgView);
+        this.pacDotBounds = new Bounds[pacdots.length];
 
         for (int i = 0; i < this.pacdots.length; i++) {
             this.pacdots[i].setFill(Color.YELLOW);
-        }
-
-        this.pacDotBounds = new Bounds[this.pacdots.length];
-
-        for (int i = 0; i < this.pacdots.length; i++) {
             this.pacDotBounds[i] = this.pacdots[i].getBoundsInParent();
         }
+
+
+        this.pacdotCount = this.pacdots.length;
+
+        addToMaze(this.pacManImgView);
+        addToMaze(this.blinkyImgView);
+        addToMaze(this.pinkyImgView);
+
 
         this.blinky.svgPath.setTranslateX(-440);
         this.blinky.svgPath.setTranslateY(-295);
@@ -138,10 +134,10 @@ public class MazeLevel {
 
         //TIMELINE AND KEYFRAME
         this.kf = new KeyFrame(Duration.millis(150), e -> {
+            checkPacDots();
             this.pacMan.update();
             this.pacMan.posX = this.pacManImgView.getTranslateX();
             this.pacMan.posY = this.pacManImgView.getTranslateY();
-            checkPacDots();
         });
         this.tl = new Timeline();
         this.tl.getKeyFrames().add(this.kf);
@@ -149,6 +145,8 @@ public class MazeLevel {
         this.tl.setRate(2.0);
 
         this.tl.play();
+
+
         this.pacManImgView.requestFocus();
 
     }
@@ -176,6 +174,7 @@ public class MazeLevel {
     public StackPane generateMazeLevel() {
         StackPane tmpMazePane = new StackPane();
         Rectangle[] tmpMaze = this.mazeData;
+
         Circle[] tmpDots = getPacDots();
         this.pacdots = new Circle[tmpDots.length];
         this.pacdots = tmpDots;
@@ -185,7 +184,7 @@ public class MazeLevel {
         }
 
         for (int j = 0; j < tmpDots.length; j++) {
-            tmpMazePane.getChildren().add(tmpDots[j]);
+            tmpMazePane.getChildren().add(this.pacdots[j]);
         }
 
 
@@ -194,31 +193,32 @@ public class MazeLevel {
 
     private void checkPacDots() {
 
+       this.pacManBounds = this.pacManImgView.getBoundsInParent();
+
         for (int i = 0; i < this.pacdots.length; i++) {
             this.pacDotBounds[i] = this.pacdots[i].getBoundsInParent();
         }
 
-        Bounds pacManBounds = this.pacMan.pacmanImageview.getBoundsInParent();
-
         //TODO FIX THIS
-        for (int i = 0; i < this.pacdots.length; i++) {
-            if (this.pacDotBounds[i].intersects(pacManBounds)) {
+        for (int i = 0; i < this.pacDotBounds.length; i++) {
+            if (this.pacDotBounds[i].intersects(this.pacManBounds)) {
+               this.pacDotBounds[i] = null;
                 this.paneMaze.getChildren().remove(this.pacdots[i]);
-                this.pacDotBounds[i] = null;
+                this.pacdots[i].setFill(Color.RED);
+                System.out.println("Hmms");
+
             }
         }
 
-        if(this.pacdots.length == 0)
+        if(this.pacdotCount == 0)
         {
             this.tl.pause();
+            this.pinkyPath.pause();
+            this.pth.pause();
             System.out.println("YOU WIN! √_√");
         }
+        //System.out.println(this.pacdotCount);
 
-    }
-
-
-    public ImageView getGhosts() {
-        return this.blinkyImgView;
     }
 
     private Rectangle[] getMaze() {
