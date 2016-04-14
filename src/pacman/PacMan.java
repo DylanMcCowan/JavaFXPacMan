@@ -124,24 +124,12 @@ public class PacMan extends MovableEntity {
 
     public boolean collisionDetection(Rectangle[] mazeRect, ImageView pacman) {
 
-//        for (int i = 0; i < this.pacDots.length; i++) {
-//
-//            Bounds pacManBounds = pacman.getBoundsInParent();
-//
-//            if (pacManBounds.intersects(pacDotBounds[i])) {
-//                this.test.getChildren().remove(this.pacDots[i]);
-//                this.pacDotBounds[i] = null;
-//
-//                System.out.println("PACDOT HIT");
-//            }
-//        }
+        Bounds pacmanBounds = pacman.getBoundsInParent();
 
         for (int i = 1; i < mazeRect.length; i++) {
             Bounds mazeWall = mazeRect[i].getBoundsInParent();
-            Bounds pacmanBounds = pacman.getBoundsInParent();
 
             if (pacmanBounds.intersects(mazeWall)) {
-
                 return true;
             }
             if (pacmanBounds.intersects(this.ghostImageView.getBoundsInParent())) {
