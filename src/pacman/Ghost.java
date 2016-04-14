@@ -26,11 +26,19 @@ public class Ghost extends MovableEntity
     SVGPath svgPath;
     SVGPath spawnPath;
 
+    FileLoader ftmp = new FileLoader();
+    PathDataLoader pdl = new PathDataLoader();
+
+   final String spawn_Path;
+
     public Ghost (Enum GHOST_NAME)
     {
         this.setId(GHOST_NAME.name());
         this.svgPath = new SVGPath();
         this.spawnPath = new SVGPath();
+
+
+       this.spawn_Path = pdl.getPathData(ftmp.loadPathFile("./src/assets/pathData/spawnPath.txt"));
 
         setInitialPath();
     }
@@ -79,41 +87,42 @@ public class Ghost extends MovableEntity
     private void setInitialPath(){
         switch(this.getId()){
             case "BLINKY":
-                this.spawnPath.setContent("/assets/pathData/spawnPath.txt");
+                this.spawnPath.setContent(this.spawn_Path);
                 selectPath();
             case "PINKY":
-                this.spawnPath.setContent("/assets/pathData/spawnPath.txt");
+                this.spawnPath.setContent(this.spawn_Path);
                 selectPath();
             case "INKY":
-                this.spawnPath.setContent("/assets/pathData/spawnPath.txt");
+                this.spawnPath.setContent(this.spawn_Path);
                 selectPath();
             case "CLYDE":
-                this.spawnPath.setContent("/assets/pathData/spawnPath.txt");
+                this.spawnPath.setContent(this.spawn_Path);
                 selectPath();
             default:break;
         }
     }
-    
-    private void selectPath(){
+
+    //TODO IMPLIMENT MEASURES TO PREVENT DUPLICATE PATH SELECTION BY GHOSTS
+    protected void selectPath(){
 
         Random rnd = new Random();
         int path = rnd.nextInt(2);
         switch(path){
             case 0:
                 this.svgPath = new SVGPath();
-                this.svgPath.setContent("/assets/pathData/path1.txt");
+                this.svgPath.setContent(pdl.getPathData(ftmp.loadPathFile("./src/assets/pathData/path1.txt")));
                 break;
             case 1:
                 this.svgPath = new SVGPath();
-                this.svgPath.setContent("/assets/pathData/path2.txt");
+                this.svgPath.setContent(pdl.getPathData(ftmp.loadPathFile("./src/assets/pathData/path2.txt")));
                 break;
             case 2:
                 this.svgPath = new SVGPath();
-                this.svgPath.setContent("/assets/pathData/path3.txt");
+                this.svgPath.setContent(pdl.getPathData(ftmp.loadPathFile("./src/assets/pathData/path3.txt")));
                 break;
             case 3:
                 this.svgPath = new SVGPath();
-                this.svgPath.setContent("/assets/pathData/path4.txt");
+                this.svgPath.setContent(pdl.getPathData(ftmp.loadPathFile("./src/assets/pathData/path4.txt")));
         }
     }
 }
