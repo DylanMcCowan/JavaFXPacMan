@@ -79,16 +79,16 @@ public class Ghost extends MovableEntity
     private void setInitialPath(){
         switch(this.getId()){
             case "BLINKY":
-                this.spawnPath.setContent("/assets/pathData/spawnPath");
+                this.spawnPath.setContent("/assets/pathData/spawnPath.txt");
                 selectPath();
             case "PINKY":
-                this.spawnPath.setContent("/assets/pathData/spawnPath");
+                this.spawnPath.setContent("/assets/pathData/spawnPath.txt");
                 selectPath();
             case "INKY":
-                this.spawnPath.setContent("/assets/pathData/spawnPath");
+                this.spawnPath.setContent("/assets/pathData/spawnPath.txt");
                 selectPath();
             case "CLYDE":
-                this.spawnPath.setContent("/assets/pathData/spawnPath");
+                this.spawnPath.setContent("/assets/pathData/spawnPath.txt");
                 selectPath();
             default:break;
         }
@@ -111,6 +111,9 @@ public class Ghost extends MovableEntity
                 this.svgPath = new SVGPath();
                 this.svgPath.setContent("/assets/pathData/path3.txt");
                 break;
+            case 3:
+                this.svgPath = new SVGPath();
+                this.svgPath.setContent("/assets/pathData/path4.txt");
         }
     }
 }
