@@ -4,6 +4,8 @@ import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
 import javafx.animation.PathTransition;
 import javafx.animation.Timeline;
+import javafx.collections.ObservableList;
+import javafx.geometry.Bounds;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -22,11 +24,15 @@ import javafx.util.Duration;
  */
 public class MazeLevel {
 
-    Rectangle[] mazeRect;
-
     //MazeScene
    private Scene maze;
-   private Pane paneMaze;
+   private StackPane paneMaze;
+
+    //MazeData
+    private Rectangle[] mazeData;
+
+    private Circle[] pacdots;
+    private Bounds[] pacDotBounds;
 
     //TODO Use an Array for the PacDots and Ghosts.
     //Maze Entities
@@ -41,311 +47,79 @@ public class MazeLevel {
     PathTransition pth;
     SVGPath svgPath = new SVGPath();
 
-
-
     //MAIN SPRITE IMAGE
     Image spriteImage;
+
 
     //TODO This is only for testing
     FileLoader ftmp = new FileLoader();
     PathDataLoader pdl = new PathDataLoader();
     //ImageView
-    private ImageView imgMaze;
-
-
 
     public MazeLevel()
     {
+
         Rectangle GamesSpace = new Rectangle(1199, 799);
-        this.paneMaze = new StackPane();
-//Spawn
-        Rectangle l1 = new Rectangle(300, 20);
-        l1.setFill(Color.BLUE);
-        l1.setTranslateY(245);
-        Rectangle l2 = new Rectangle(20, 210);
-        l2.setFill(Color.BLUE);
-        l2.setTranslateY(340);
-        l2.setTranslateX(210);
-        Rectangle l3 = new Rectangle(20, 210);
-        l3.setFill(Color.BLUE);
-        l3.setTranslateY(340);
-        l3.setTranslateX(-210);
-//right of spawn
-        Rectangle l4 = new Rectangle(120, 200);
-        l4.setFill(Color.BLUE);
-        l4.setTranslateY(150);
-        l4.setTranslateX(335);
-        Rectangle l5 = new Rectangle(120, 240);
-        l5.setFill(Color.BLUE);
-        l5.setTranslateY(-140);
-        l5.setTranslateX(335);
-//left of spawn
-        Rectangle l6 = new Rectangle(120, 200);
-        l6.setFill(Color.BLUE);
-        l6.setTranslateY(150);
-        l6.setTranslateX(-335);
-        Rectangle l7 = new Rectangle(120, 240);
-        l7.setFill(Color.BLUE);
-        l7.setTranslateY(-140);
-        l7.setTranslateX(-335);
-// middle
-        Rectangle l9 = new Rectangle(20, 145);
-        l9.setFill(Color.BLUE);
-        l9.setTranslateY(115);
-        l9.setTranslateX(210);
-        Rectangle l10 = new Rectangle(20, 145);
-        l10.setFill(Color.BLUE);
-        l10.setTranslateY(115);
-        l10.setTranslateX(-210);
-//ghost spawn
-        Rectangle l8 = new Rectangle(300, 20);
-        l8.setFill(Color.BLUE);
-        l8.setTranslateY(175);
-        Rectangle l12 = new Rectangle(20, 120);
-        l12.setFill(Color.BLUE);
-        l12.setTranslateY(110);
-        l12.setTranslateX(140);
-        Rectangle l13 = new Rectangle(20, 120);
-        l13.setFill(Color.BLUE);
-        l13.setTranslateY(110);
-        l13.setTranslateX(-140);
-        Rectangle l16 = new Rectangle(100, 20);
-        l16.setFill(Color.BLUE);
-        l16.setTranslateY(55);
-        l16.setTranslateX(100);
-        Rectangle l17 = new Rectangle(100, 20);
-        l17.setFill(Color.BLUE);
-        l17.setTranslateY(55);
-        l17.setTranslateX(-100);
-        //top
-        Rectangle l14 = new Rectangle(20, 240);
-        l14.setFill(Color.BLUE);
-        l14.setTranslateY(-140);
-        l14.setTranslateX(210);
-        Rectangle l15 = new Rectangle(20, 240);
-        l15.setFill(Color.BLUE);
-        l15.setTranslateY(-140);
-        l15.setTranslateX(-210);
-        Rectangle l18 = new Rectangle(300, 100);
-        l18.setFill(Color.BLUE);
-        l18.setTranslateY(-70);
-        Rectangle l19 = new Rectangle(300, 90);
-        l19.setFill(Color.BLUE);
-        l19.setTranslateY(-215);
 
-        //pacdots
-        Circle[] pacdots = new Circle[100];
-        double width = 12;
-        int Xpos = -420;
-        int Ypos = -280;
-        for (int i = 0; i < 13; i++) {
-            pacdots[i] = new Circle(width);
-            pacdots[i].setTranslateX(Xpos);
-            pacdots[i].setTranslateY(Ypos);
-            pacdots[i].setFill(Color.GREEN);
-            this.paneMaze.getChildren().add(pacdots[i]);
-            Xpos += 70;
-        }
-        Xpos -= 70;
-        for (int i = 13; i < 22; i++) {
-            pacdots[i] = new Circle(width);
-            pacdots[i].setTranslateX(Xpos);
-            pacdots[i].setTranslateY(Ypos);
-            pacdots[i].setFill(Color.GREEN);
-            this.paneMaze.getChildren().add(pacdots[i]);
-            Ypos += 70;
-        }
-        Xpos = -420;
-        Ypos = -280;
-        for (int i = 22; i < 31; i++) {
-            pacdots[i] = new Circle(width);
-            pacdots[i].setTranslateX(Xpos);
-            pacdots[i].setTranslateY(Ypos);
-            pacdots[i].setFill(Color.GREEN);
-            this.paneMaze.getChildren().add(pacdots[i]);
-            Ypos += 70;
-        }
-        Xpos = -350;
-        Ypos = 20;
-        for (int i = 31; i < 42; i++) {
-            pacdots[i] = new Circle(width);
-            pacdots[i].setTranslateX(Xpos);
-            pacdots[i].setTranslateY(Ypos);
-            pacdots[i].setFill(Color.GREEN);
-            this.paneMaze.getChildren().add(pacdots[i]);
-            Xpos += 70;
-        }
-        Xpos = 175;
-        Ypos = -230;
-        for (int i = 42; i < 50; i++) {
-            pacdots[i] = new Circle(width);
-            pacdots[i].setTranslateX(Xpos);
-            pacdots[i].setTranslateY(Ypos);
-            pacdots[i].setFill(Color.GREEN);
-            this.paneMaze.getChildren().add(pacdots[i]);
-            Ypos += 70;
-        }
-        Xpos = 250;
-        Ypos = -230;
-        for (int i = 50; i < 58; i++) {
-            pacdots[i] = new Circle(width);
-            pacdots[i].setTranslateX(Xpos);
-            pacdots[i].setTranslateY(Ypos);
-            pacdots[i].setFill(Color.GREEN);
-            this.paneMaze.getChildren().add(pacdots[i]);
-            Ypos += 70;
-        }
-        Xpos = -250;
-        Ypos = -230;
-        for (int i = 58; i < 66; i++) {
-            pacdots[i] = new Circle(width);
-            pacdots[i].setTranslateX(Xpos);
-            pacdots[i].setTranslateY(Ypos);
-            pacdots[i].setFill(Color.GREEN);
-            this.paneMaze.getChildren().add(pacdots[i]);
-            Ypos += 70;
-        }
-        Xpos = -175;
-        Ypos = -230;
-        for (int i = 66; i < 76; i++) {
-            pacdots[i] = new Circle(width);
-            pacdots[i].setTranslateX(Xpos);
-            pacdots[i].setTranslateY(Ypos);
-            pacdots[i].setFill(Color.GREEN);
-            this.paneMaze.getChildren().add(pacdots[i]);
-            Ypos += 70;
-        }
-        Xpos = -120;
-        Ypos = -140;
-        for (int i = 76; i < 80; i++) {
-            pacdots[i] = new Circle(width);
-            pacdots[i].setTranslateX(Xpos);
-            pacdots[i].setTranslateY(Ypos);
-            pacdots[i].setFill(Color.GREEN);
-            this.paneMaze.getChildren().add(pacdots[i]);
-            Xpos += 70;
-        }
-        Xpos = -120;
-        Ypos = 210;
-        for (int i = 80; i < 84; i++) {
-            pacdots[i] = new Circle(width);
-            pacdots[i].setTranslateX(Xpos);
-            pacdots[i].setTranslateY(Ypos);
-            pacdots[i].setFill(Color.GREEN);
-            this.paneMaze.getChildren().add(pacdots[i]);
-            Xpos += 70;
-        }
-        Xpos = -120;
-        Ypos = 280;
-        for (int i = 84; i < 88; i++) {
-            pacdots[i] = new Circle(width);
-            pacdots[i].setTranslateX(Xpos);
-            pacdots[i].setTranslateY(Ypos);
-            pacdots[i].setFill(Color.GREEN);
-            this.paneMaze.getChildren().add(pacdots[i]);
-            Xpos += 70;
-        }
-
-mazeRect = new Rectangle[19];
-
-for(int i =1; i < mazeRect.length;i++){
-    switch(i){
-        case 1:
-            mazeRect[i] = l1;
-            break;
-        case 2:
-            mazeRect[i] = l2;
-            break;
-        case 3:
-            mazeRect[i] = l3;
-            break;
-        case 4:
-            mazeRect[i] = l4;
-            break;
-        case 5:
-            mazeRect[i] = l5;
-            break;
-        case 6:
-            mazeRect[i] = l6;
-            break;
-        case 7:
-            mazeRect[i] = l7;
-            break;
-        case 8:
-            mazeRect[i] = l8;
-            break;
-        case 9:
-            mazeRect[i] = l9;
-            break;
-        case 10:
-            mazeRect[i] = l10;
-            break;
-        case 11:
-            //mistake, no rectangle l11
-            mazeRect[i] = l19;
-            break;
-        case 12:
-            mazeRect[i] = l12;
-            break;
-        case 13:
-            mazeRect[i] = l13;
-            break;
-        case 14:
-            mazeRect[i] = l14;
-            break;
-        case 15:
-            mazeRect[i] = l15;
-            break;
-        case 16:
-            mazeRect[i] = l16;
-            break;
-        case 17:
-            mazeRect[i] = l17;
-            break;
-        case 18:
-            mazeRect[i] = l18;
-            System.out.println("Final Added");
-            break;
-        
-    }
-}
-
+        this.mazeData = getMaze();
+        this.paneMaze = generateMazeLevel();
 
 
         this.spriteImage = getSpriteImagePath("assets/img/PacManSprite.png");
 
-//        this.imgMaze = new ImageView(this.spriteImage);
-//        this.imgMaze.setViewport(getMazeSprite());
 
-        this.pacMan = new PacMan();
+        this.pacdots = new Circle[this.getPacDots().length];
+        this.pacdots = this.getPacDots();
+
+
+        this.blinky = new Ghost(GhostNames.BLINKY);
+        this.blinkyImgView = new ImageView(this.spriteImage);
+        this.blinkyImgView.setViewport(this.blinky.getSprite());
+
         this.pacManImgView = new ImageView(this.spriteImage);
+        this.pacMan = new PacMan(this.mazeData, this.blinkyImgView, this.pacdots, this.paneMaze);
         this.pacManImgView.setViewport(this.pacMan.getSprite());
+        this.pacMan.setup(this.pacManImgView);
 
-//        this.blinky = new Ghost(GhostNames.CLYDE);
-//        this.blinkyImgView = new ImageView(this.spriteImage);
-//        this.blinkyImgView.setViewport(this.blinky.getSprite());
 
-       // addToMaze(this.imgMaze);
-        addToMaze(this.pacManImgView);
-       // addToMaze(this.blinkyImgView);
+       addToMaze(this.pacManImgView);
+       addToMaze(this.blinkyImgView);
 
-        this.svgPath.setContent(pdl.getPathData(ftmp.loadPathFile("./src/assets/pathData/path2.txt")));
-//
+        this.pacDotBounds = new Bounds[this.pacdots.length];
+
+        for (int i = 0; i < this.pacdots.length; i++) {
+            this.pacDotBounds[i] = this.pacdots[i].getBoundsInParent();
+            this.pacdots[i].setStroke(Color.RED);
+        }
+
+
+
+        this.svgPath.setContent(pdl.getPathData(ftmp.loadPathFile("./src/assets/pathData/path1.txt")));
+        this.svgPath.setTranslateX(-440);
+        this.svgPath.setTranslateY(-295);
+
 //        //Path Transition and Controlling Sprites
         this.pth = new PathTransition();
-        this.pth.setNode(this.pacManImgView);
+        this.pth.setNode(this.blinkyImgView);
         this.pth.setPath(this.svgPath);
+
         this.pth.setInterpolator(Interpolator.LINEAR);
         this.pth.setDuration(Duration.seconds(25));
         this.pth.setCycleCount(Timeline.INDEFINITE);
         this.pth.setAutoReverse(true);
-        //this.pth.play();
-
-        for (int i = 1; i < this.mazeRect.length; i++) {
-            this.paneMaze.getChildren().add(this.mazeRect[i]);
-        }
+        this.pth.play();
 
         this.maze = new Scene(this.paneMaze, 900, 600);
+
+        //TIMELINE AND KEYFRAME
+        this.kf = new KeyFrame(Duration.millis(100), e -> { this.pacMan.update(); this.pacMan.posX = this.pacManImgView.getTranslateX(); this.pacMan.posY = this.pacManImgView.getTranslateY(); checkPacDots(); } );
+        this.tl = new Timeline();
+        this.tl.getKeyFrames().add(this.kf);
+        this.tl.setCycleCount(Timeline.INDEFINITE);
+        this.tl.setRate(2.0);
+
+        this.tl.play();
+        this.pacManImgView.requestFocus();
 
     }
 
@@ -359,22 +133,76 @@ for(int i =1; i < mazeRect.length;i++){
     {
         //Should get around to making this FileLoader class static...
         FileLoader f = new FileLoader();
-
         Image tmpImage = new Image(f.loadImageFile(path).getPath());
         return tmpImage;
 
     }
 
-
     //TODO  only return the sprite for the Maze
     private Rectangle2D getMazeSprite()
     {
         //For Experimental purposes only, hardcoded to load the rect related to the main map itself. (0,5),(490,545)
-        Rectangle2D spriteImg = new Rectangle2D(0,5,490,540);
+        return new Rectangle2D(0,5,490,540);
 
-        return spriteImg;
     }
 
+    public StackPane generateMazeLevel()
+    {
+        StackPane tmpMazePane = new StackPane();
+        Rectangle[] tmpMaze = this.mazeData;
+
+
+        Circle[] tmpDots = getPacDots();
+
+            for (int i = 1; i < tmpMaze.length; i++) {
+                tmpMazePane.getChildren().add(tmpMaze[i]);
+            }
+
+            for (int j = 0; j < tmpDots.length; j++) {
+                tmpMazePane.getChildren().add(tmpDots[j]);
+            }
+
+
+        return tmpMazePane;
+    }
+
+    private void checkPacDots() {
+
+        for (int i = 0; i < this.pacdots.length; i++) {
+            this.pacDotBounds[i] = this.pacdots[i].getBoundsInParent();
+        }
+
+        Bounds pacManBounds = this.pacMan.pacmanImageview.getBoundsInParent();
+
+        for (int i = 0; i < this.pacdots.length; i++) {
+            if (this.pacDotBounds[i].intersects(pacManBounds)) {
+                this.paneMaze.getChildren().remove(this.pacdots[i]);
+                this.pacDotBounds[i] = null;
+                System.out.println("PAC DOT HIT");
+                System.out.println(this.pacdots[i]);
+            }
+        }
+
+    }
+
+
+    public ImageView getGhosts()
+    {
+        return this.blinkyImgView;
+    }
+
+    private Rectangle[] getMaze()
+    {
+        Rectangle[] tmpRect;
+        tmpRect = MazeData.generateMazeData();
+        return tmpRect;
+    }
+
+    private Circle[] getPacDots()
+    {
+        Circle[] tmpPacdots = PacDot.generatePacDotData();
+        return tmpPacdots;
+    }
 
     public Scene getScene() {
         return this.maze;
