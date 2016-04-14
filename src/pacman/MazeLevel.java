@@ -25,8 +25,8 @@ import javafx.util.Duration;
 public class MazeLevel {
 
     //MazeScene
-   private Scene maze;
-   private StackPane paneMaze;
+    private Scene maze;
+    private StackPane paneMaze;
 
     //MazeData
     private Rectangle[] mazeData;
@@ -40,11 +40,14 @@ public class MazeLevel {
     private ImageView pacManImgView;
     private Ghost blinky;
     private ImageView blinkyImgView;
+    private Ghost pinky;
+    private ImageView pinkyImgView;
 
     //ANIMATION
     Timeline tl;
     KeyFrame kf;
     PathTransition pth;
+    PathTransition pinkyPath;
     SVGPath svgPath = new SVGPath();
 
     //MAIN SPRITE IMAGE
@@ -56,25 +59,23 @@ public class MazeLevel {
     PathDataLoader pdl = new PathDataLoader();
     //ImageView
 
-    public MazeLevel()
-    {
-
-        Rectangle GamesSpace = new Rectangle(1199, 799);
+    public MazeLevel() {
 
         this.mazeData = getMaze();
         this.paneMaze = generateMazeLevel();
 
+        this.paneMaze.setStyle("-fx-background-color: black");
 
         this.spriteImage = getSpriteImagePath("assets/img/PacManSprite.png");
-
-
-        this.pacdots = new Circle[this.getPacDots().length];
-        this.pacdots = this.getPacDots();
 
 
         this.blinky = new Ghost(GhostNames.BLINKY);
         this.blinkyImgView = new ImageView(this.spriteImage);
         this.blinkyImgView.setViewport(this.blinky.getSprite());
+
+        this.pinky = new Ghost(GhostNames.PINKY);
+        this.pinkyImgView = new ImageView(this.spriteImage);
+        this.pinkyImgView.setViewport(this.pinky.getSprite());
 
         this.pacManImgView = new ImageView(this.spriteImage);
         this.pacMan = new PacMan(this.mazeData, this.blinkyImgView, this.pacdots, this.paneMaze);
@@ -82,37 +83,66 @@ public class MazeLevel {
         this.pacMan.setup(this.pacManImgView);
 
 
-       addToMaze(this.pacManImgView);
-       addToMaze(this.blinkyImgView);
+        addToMaze(this.pacManImgView);
+
+        addToMaze(this.blinkyImgView);
+        addToMaze(this.pinkyImgView);
+
+        for (int i = 0; i < this.pacdots.length; i++) {
+            this.pacdots[i].setFill(Color.YELLOW);
+        }
 
         this.pacDotBounds = new Bounds[this.pacdots.length];
 
         for (int i = 0; i < this.pacdots.length; i++) {
             this.pacDotBounds[i] = this.pacdots[i].getBoundsInParent();
-            this.pacdots[i].setStroke(Color.RED);
         }
 
+        this.blinky.svgPath.setTranslateX(-440);
+        this.blinky.svgPath.setTranslateY(-295);
 
+        this.pinky.svgPath.setTranslateX(-440);
+        this.pinky.svgPath.setTranslateY(-295);
 
-        this.svgPath.setContent(pdl.getPathData(ftmp.loadPathFile("./src/assets/pathData/path1.txt")));
-        this.svgPath.setTranslateX(-440);
-        this.svgPath.setTranslateY(-295);
-
-//        //Path Transition and Controlling Sprites
+        //Path Transition and Controlling Sprites
         this.pth = new PathTransition();
         this.pth.setNode(this.blinkyImgView);
-        this.pth.setPath(this.svgPath);
+        this.pth.setPath(this.blinky.svgPath);
+
+        this.pinkyPath = new PathTransition();
+        this.pinkyPath.setNode(this.pinkyImgView);
+        this.pinkyPath.setPath(this.pinky.svgPath);
+        //TODO FIX THIS
+        if(this.pinkyPath.getNode().equals(this.pth.getNode()))
+        {
+            this.pinky.selectPath();
+            this.pinkyPath.setPath(this.pinky.svgPath);
+            System.out.println("PREVENT!");
+        }
+
+        this.pinkyPath.setInterpolator(Interpolator.LINEAR);
+        this.pinkyPath.setDuration(Duration.seconds(25));
+        this.pinkyPath.setCycleCount(Timeline.INDEFINITE);
+        this.pinkyPath.setAutoReverse(true);
+
 
         this.pth.setInterpolator(Interpolator.LINEAR);
         this.pth.setDuration(Duration.seconds(25));
         this.pth.setCycleCount(Timeline.INDEFINITE);
         this.pth.setAutoReverse(true);
+
+        this.pinkyPath.play();
         this.pth.play();
 
         this.maze = new Scene(this.paneMaze, 900, 600);
 
         //TIMELINE AND KEYFRAME
-        this.kf = new KeyFrame(Duration.millis(100), e -> { this.pacMan.update(); this.pacMan.posX = this.pacManImgView.getTranslateX(); this.pacMan.posY = this.pacManImgView.getTranslateY(); checkPacDots(); } );
+        this.kf = new KeyFrame(Duration.millis(150), e -> {
+            this.pacMan.update();
+            this.pacMan.posX = this.pacManImgView.getTranslateX();
+            this.pacMan.posY = this.pacManImgView.getTranslateY();
+            checkPacDots();
+        });
         this.tl = new Timeline();
         this.tl.getKeyFrames().add(this.kf);
         this.tl.setCycleCount(Timeline.INDEFINITE);
@@ -123,14 +153,12 @@ public class MazeLevel {
 
     }
 
-    public void addToMaze(Node object)
-    {
+    public void addToMaze(Node object) {
         this.paneMaze.getChildren().add(object);
     }
 
     //This should load the PacManSprite.png file generally...
-    private Image getSpriteImagePath(String path)
-    {
+    private Image getSpriteImagePath(String path) {
         //Should get around to making this FileLoader class static...
         FileLoader f = new FileLoader();
         Image tmpImage = new Image(f.loadImageFile(path).getPath());
@@ -139,28 +167,26 @@ public class MazeLevel {
     }
 
     //TODO  only return the sprite for the Maze
-    private Rectangle2D getMazeSprite()
-    {
+    private Rectangle2D getMazeSprite() {
         //For Experimental purposes only, hardcoded to load the rect related to the main map itself. (0,5),(490,545)
-        return new Rectangle2D(0,5,490,540);
+        return new Rectangle2D(0, 5, 490, 540);
 
     }
 
-    public StackPane generateMazeLevel()
-    {
+    public StackPane generateMazeLevel() {
         StackPane tmpMazePane = new StackPane();
         Rectangle[] tmpMaze = this.mazeData;
-
-
         Circle[] tmpDots = getPacDots();
+        this.pacdots = new Circle[tmpDots.length];
+        this.pacdots = tmpDots;
 
-            for (int i = 1; i < tmpMaze.length; i++) {
-                tmpMazePane.getChildren().add(tmpMaze[i]);
-            }
+        for (int i = 1; i < tmpMaze.length; i++) {
+            tmpMazePane.getChildren().add(tmpMaze[i]);
+        }
 
-            for (int j = 0; j < tmpDots.length; j++) {
-                tmpMazePane.getChildren().add(tmpDots[j]);
-            }
+        for (int j = 0; j < tmpDots.length; j++) {
+            tmpMazePane.getChildren().add(tmpDots[j]);
+        }
 
 
         return tmpMazePane;
@@ -174,32 +200,34 @@ public class MazeLevel {
 
         Bounds pacManBounds = this.pacMan.pacmanImageview.getBoundsInParent();
 
+        //TODO FIX THIS
         for (int i = 0; i < this.pacdots.length; i++) {
             if (this.pacDotBounds[i].intersects(pacManBounds)) {
                 this.paneMaze.getChildren().remove(this.pacdots[i]);
                 this.pacDotBounds[i] = null;
-                System.out.println("PAC DOT HIT");
-                System.out.println(this.pacdots[i]);
             }
+        }
+
+        if(this.pacdots.length == 0)
+        {
+            this.tl.pause();
+            System.out.println("YOU WIN! √_√");
         }
 
     }
 
 
-    public ImageView getGhosts()
-    {
+    public ImageView getGhosts() {
         return this.blinkyImgView;
     }
 
-    private Rectangle[] getMaze()
-    {
+    private Rectangle[] getMaze() {
         Rectangle[] tmpRect;
         tmpRect = MazeData.generateMazeData();
         return tmpRect;
     }
 
-    private Circle[] getPacDots()
-    {
+    private Circle[] getPacDots() {
         Circle[] tmpPacdots = PacDot.generatePacDotData();
         return tmpPacdots;
     }
@@ -207,6 +235,6 @@ public class MazeLevel {
     public Scene getScene() {
         return this.maze;
     }
-    
-    
+
+
 }
