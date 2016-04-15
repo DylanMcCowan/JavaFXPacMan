@@ -4,7 +4,6 @@ import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
 import javafx.animation.PathTransition;
 import javafx.animation.Timeline;
-import javafx.collections.ObservableList;
 import javafx.geometry.Bounds;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
@@ -48,7 +47,6 @@ public class MazeLevel {
     KeyFrame kf;
     PathTransition pth;
     PathTransition pinkyPath;
-    SVGPath svgPath = new SVGPath();
 
     //MAIN SPRITE IMAGE
     Image spriteImage;
@@ -75,17 +73,16 @@ public class MazeLevel {
         this.pinkyImgView.setViewport(this.pinky.getSprite());
 
         this.pacManImgView = new ImageView(this.spriteImage);
-        this.pacMan = new PacMan(this.mazeData, this.blinkyImgView, this.pacdots, this.paneMaze);
+        this.pacMan = new PacMan(this.mazeData, this.blinkyImgView, this.paneMaze);
         this.pacManImgView.setViewport(this.pacMan.getSprite());
         this.pacMan.setup(this.pacManImgView);
 
-        this.pacDotBounds = new Bounds[pacdots.length];
+        this.pacDotBounds = new Bounds[this.pacdots.length];
 
         for (int i = 0; i < this.pacdots.length; i++) {
             this.pacdots[i].setFill(Color.YELLOW);
             this.pacDotBounds[i] = this.pacdots[i].getBoundsInParent();
         }
-
 
         this.pacdotCount = this.pacdots.length;
 
@@ -120,7 +117,6 @@ public class MazeLevel {
         this.pinkyPath.setDuration(Duration.seconds(25));
         this.pinkyPath.setCycleCount(Timeline.INDEFINITE);
         this.pinkyPath.setAutoReverse(true);
-
 
         this.pth.setInterpolator(Interpolator.LINEAR);
         this.pth.setDuration(Duration.seconds(25));
@@ -193,7 +189,7 @@ public class MazeLevel {
 
     private void checkPacDots() {
 
-       this.pacManBounds = this.pacManImgView.getBoundsInParent();
+        this.pacManBounds = this.pacManImgView.getBoundsInParent();
 
         for (int i = 0; i < this.pacdots.length; i++) {
             this.pacDotBounds[i] = this.pacdots[i].getBoundsInParent();
@@ -202,29 +198,28 @@ public class MazeLevel {
         //TODO FIX THIS
         for (int i = 0; i < this.pacDotBounds.length; i++) {
             if (this.pacDotBounds[i].intersects(this.pacManBounds)) {
-               this.pacDotBounds[i] = null;
+                this.pacDotBounds[i] = null;
                 this.paneMaze.getChildren().remove(this.pacdots[i]);
                 System.out.println("Hmms");
 
             }
         }
-        
-        int count= 0;
-        for(int i =0; i<this.pacdots.length;i++){
-            if(paneMaze.getChildren().contains(this.pacdots[i])){
-                
+
+        int count = 0;
+        for (int i = 0; i < this.pacdots.length; i++) {
+            if (paneMaze.getChildren().contains(this.pacdots[i])) {
+
+            } else {
+                count++;
             }
-            else{
-               count++; 
-            }
-            if(count==this.pacdots.length){
-            this.tl.pause();
-            this.pinkyPath.pause();
-            this.pth.pause();
-            System.out.println("YOU WIN! √_√");
+            if (count == this.pacdots.length) {
+                this.tl.pause();
+                this.pinkyPath.pause();
+                this.pth.pause();
+                System.out.println("YOU WIN! √_√");
             }
         }
-        
+
     }
 
     private Rectangle[] getMaze() {
