@@ -32,9 +32,6 @@ public class PacMan extends MovableEntity {
     ImageView ghostImageView;
     StackPane test;
 
-    Bounds pacmanBounds;
-    Bounds pacDotBounds[];
-
     //movement
     boolean moving;
     private String currentDirection;
@@ -42,20 +39,19 @@ public class PacMan extends MovableEntity {
     Timeline tl;
     KeyFrame kf;
 
-    public PacMan(Rectangle[] mazeRect, ImageView ghost, Circle[] pacDots, StackPane sp) {
+    public PacMan(Rectangle[] mazeRect, ImageView ghost, StackPane sp) {
         getSprite();
         this.mazeRect = mazeRect;
         this.ghostImageView = ghost;
-        this.pacDots = pacDots;
         this.test = sp;
         this.isDead = false;
-        this.pacDotBounds = new Bounds[this.pacDots.length];
 
 
     }
 
     public void setup(ImageView imgView) {
         this.pacmanImageview = imgView;
+
         this.pacmanImageview.setOnKeyPressed(e -> {
             this.getKeyboardInput(e, this.pacmanImageview);
         });
