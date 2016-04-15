@@ -103,7 +103,6 @@ public class Ghost extends MovableEntity
         }
     }
 
-    //TODO IMPLIMENT MEASURES TO PREVENT DUPLICATE PATH SELECTION BY GHOSTS
     protected void selectPath(){
 
         Random rnd = new Random();

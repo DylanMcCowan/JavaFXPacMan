@@ -16,5 +16,5 @@ public interface Entity
 
     void setId (String name);
 
-    public Rectangle2D getSprite();
+    Rectangle2D getSprite();
 }

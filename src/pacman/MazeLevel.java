@@ -29,7 +29,7 @@ public class MazeLevel {
     private StackPane paneMaze;
 
     private Button bttnStart;
-    private Text ScoreBoard;
+    private Text scoreBoard;
 
     //MazeData
     private Rectangle[] mazeData;
@@ -45,6 +45,7 @@ public class MazeLevel {
     private ImageView blinkyImgView;
     private Ghost pinky;
     private ImageView pinkyImgView;
+
 
     //ANIMATION
     Timeline tl;
@@ -93,17 +94,15 @@ public class MazeLevel {
         this.bttnStart.setLayoutX(this.paneMaze.getWidth() / 2 - 50);
         this.bttnStart.setLayoutY(this.paneMaze.getHeight() / 2);
 
-        this.ScoreBoard = new Text();
-
-
-        ScoreBoard.setVisible(false);
+        this.scoreBoard = new Text();
+        scoreBoard.setVisible(false);
 
 
         addToMaze(this.pacManImgView);
         addToMaze(this.blinkyImgView);
         addToMaze(this.pinkyImgView);
         addToMaze(this.bttnStart);
-        addToMaze(this.ScoreBoard);
+        addToMaze(this.scoreBoard);
 
 
         //Path Transition and Controlling Sprites
@@ -115,11 +114,13 @@ public class MazeLevel {
         this.pinkyPath.setNode(this.pinkyImgView);
         this.pinkyPath.setPath(this.pinky.svgPath);
 
+        //Duplicate Path Prevention
         while(this.pinky.SPAWN_PATH == this.blinky.SPAWN_PATH) {
             this.pinky.selectPath();
             this.pinkyPath.setPath(this.pinky.svgPath);
         }
 
+        //Path Alignment with maze
         this.blinky.svgPath.setTranslateX(-440);
         this.blinky.svgPath.setTranslateY(-295);
 
@@ -202,7 +203,7 @@ public class MazeLevel {
             this.pacDotBounds[i] = this.pacdots[i].getBoundsInParent();
         }
 
-        //TODO FIX THIS
+        //TODO Optimise this code
         for (int i = 0; i < this.pacDotBounds.length; i++) {
             if (this.pacDotBounds[i].intersects(this.pacManBounds)) {
                 this.pacDotBounds[i] = null;
@@ -213,7 +214,6 @@ public class MazeLevel {
         int count = 0;
         for (int i = 0; i < this.pacdots.length; i++) {
             if (paneMaze.getChildren().contains(this.pacdots[i])) {
-
             } else {
                 count++;
             }
@@ -232,16 +232,16 @@ public class MazeLevel {
             this.pinkyPath.pause();
             this.pth.pause();
             System.out.println("YOU WIN! √_√");
-            ScoreBoard.setText("YOU WIN");
-            ScoreBoard.setFill(Color.WHITE);
-            ScoreBoard.setFont(Font.font(32));
-            ScoreBoard.setVisible(true);
+            scoreBoard.setText("YOU WIN");
+            scoreBoard.setFill(Color.WHITE);
+            scoreBoard.setFont(Font.font(32));
+            scoreBoard.setVisible(true);
         }
         if (this.pacMan.isDead) {
-            ScoreBoard.setText("GHOST WIN");
-            ScoreBoard.setFill(Color.WHITE);
-            ScoreBoard.setFont(Font.font(32));
-            ScoreBoard.setVisible(true);
+            scoreBoard.setText("GHOST WIN");
+            scoreBoard.setFill(Color.WHITE);
+            scoreBoard.setFont(Font.font(32));
+            scoreBoard.setVisible(true);
         }
 
     }

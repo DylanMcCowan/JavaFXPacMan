@@ -5,7 +5,7 @@ import static javafx.application.Application.launch;
 import javafx.stage.Stage;
 
 /**
- * Created by on 2016-04-01.
+ * Created by dylan on 2016-04-01.
  */
 public class Main extends Application
 {

@@ -14,7 +14,7 @@ public class PacDot implements Entity
     public String name;
 
 
-    //Constructor to initalize the creation of a PacDot
+    //TODO Automate the contruction of the PacDot by calling the appropriate method from constructor
     public PacDot ()
     {
 

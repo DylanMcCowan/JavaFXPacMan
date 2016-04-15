@@ -15,6 +15,8 @@ enum DIRECTION {
  * @author KevinCamp
  */
 public class PacMan extends MovableEntity {
+
+    //TODO Getters & Setters
     boolean isVisible;
     String name;
     boolean isDead;
@@ -30,7 +32,6 @@ public class PacMan extends MovableEntity {
     private String currentDirection;
 
     public PacMan(Rectangle[] mazeRect, ImageView ghost, ImageView ghost2) {
-        getSprite();
         this.mazeRect = mazeRect;
         this.ghostImageView = ghost;
         this.ghostImageView2 = ghost2;
@@ -44,6 +45,7 @@ public class PacMan extends MovableEntity {
         this.pacmanImageview.setOnKeyPressed(e -> {
             this.getKeyboardInput(e, this.pacmanImageview);
         });
+
         this.currentDirection = "UP";
         this.moving = false;
 
@@ -94,20 +96,12 @@ public class PacMan extends MovableEntity {
 
                 }
             }
-        }else{
+        } else {
 
         }
         collisionDetection(this.mazeRect, this.pacmanImageview);
 
-
     }
-
-    //TODO Change this to make it not incorrect
-    public void isDead() {
-        this.isDead = true;
-        this.isVisible = false;
-    }
-
 
     public boolean collisionDetection(Rectangle[] mazeRect, ImageView pacman) {
 
@@ -208,19 +202,15 @@ public class PacMan extends MovableEntity {
     public void getKeyboardInput(KeyEvent e, ImageView img) {
         switch (e.getCode()) {
             case A:
-                // moveToLeft(img);
                 setDirection(DIRECTION.LEFT);
                 break;
             case D:
-                //moveToRight(img);
                 setDirection(DIRECTION.RIGHT);
                 break;
             case S:
-                //moveDown(img);
                 setDirection(DIRECTION.DOWN);
                 break;
             case W:
-                // moveUp(img);
                 setDirection(DIRECTION.UP);
                 break;
         }

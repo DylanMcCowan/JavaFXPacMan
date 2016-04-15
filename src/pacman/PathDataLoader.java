@@ -14,7 +14,7 @@ public class PathDataLoader {
     {
     }
 
-    //TODO Redevelop this so it doesn't suck
+    //TODO Find ways to to optimise this and add more checks
     public String getPathData(File pFile)
     {
         String pData = "";
@@ -25,7 +25,7 @@ public class PathDataLoader {
                 }
                 scan.close();
             } catch (FileNotFoundException e) {
-                e.printStackTrace();
+                System.out.println("Error, File not Found. Please Restart... - " + e.getLocalizedMessage());
             }
         }else{
         }

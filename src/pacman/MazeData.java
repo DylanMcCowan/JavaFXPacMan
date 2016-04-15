@@ -102,7 +102,7 @@ public class MazeData {
         l19.setFill(Color.BLUE);
         l19.setTranslateY(-215);
 
-//TODO FIX THIS HORRIBLE THING WHERE I STARTS AT 1
+//TODO Fix the i starting at one
         for (int i = 1; i < mazeRect.length; i++) {
             switch (i) {
                 case 1:
