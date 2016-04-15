@@ -24,7 +24,7 @@ public class PacDot implements Entity
     {
         //pacdots
         Circle[] pacdots = new Circle[88];
-        double width = 12;
+        double width = 5;
         int Xpos = -420;
         int Ypos = -280;
         for (int i = 0; i < 13; i++) {
@@ -89,7 +89,7 @@ public class PacDot implements Entity
         }
         Xpos = -175;
         Ypos = -230;
-        for (int i = 66; i < 76; i++) {
+        for (int i = 66; i < 74; i++) {
             pacdots[i] = new Circle(width);
             pacdots[i].setTranslateX(Xpos);
             pacdots[i].setTranslateY(Ypos);
@@ -98,7 +98,7 @@ public class PacDot implements Entity
         }
         Xpos = -120;
         Ypos = -140;
-        for (int i = 76; i < 80; i++) {
+        for (int i = 74; i < 79; i++) {
             pacdots[i] = new Circle(width);
             pacdots[i].setTranslateX(Xpos);
             pacdots[i].setTranslateY(Ypos);
@@ -107,7 +107,7 @@ public class PacDot implements Entity
         }
         Xpos = -120;
         Ypos = 210;
-        for (int i = 80; i < 84; i++) {
+        for (int i = 79; i < 84; i++) {
             pacdots[i] = new Circle(width);
             pacdots[i].setTranslateX(Xpos);
             pacdots[i].setTranslateY(Ypos);

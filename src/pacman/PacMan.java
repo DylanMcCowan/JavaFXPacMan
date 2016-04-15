@@ -1,16 +1,10 @@
 
 package pacman;
 
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.geometry.Bounds;
 import javafx.geometry.Rectangle2D;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 
 enum DIRECTION {
@@ -26,41 +20,34 @@ public class PacMan extends MovableEntity {
     boolean isDead;
 
     Rectangle[] mazeRect;
-    Circle[] pacDots;
 
     ImageView pacmanImageview;
     ImageView ghostImageView;
-    StackPane test;
-
-    Bounds pacmanBounds;
-    Bounds pacDotBounds[];
+    ImageView ghostImageView2;
 
     //movement
     boolean moving;
     private String currentDirection;
 
-    Timeline tl;
-    KeyFrame kf;
-
-    public PacMan(Rectangle[] mazeRect, ImageView ghost, Circle[] pacDots, StackPane sp) {
+    public PacMan(Rectangle[] mazeRect, ImageView ghost, ImageView ghost2) {
         getSprite();
         this.mazeRect = mazeRect;
         this.ghostImageView = ghost;
-        this.pacDots = pacDots;
-        this.test = sp;
+        this.ghostImageView2 = ghost2;
         this.isDead = false;
-        this.pacDotBounds = new Bounds[this.pacDots.length];
-
 
     }
 
     public void setup(ImageView imgView) {
         this.pacmanImageview = imgView;
+
         this.pacmanImageview.setOnKeyPressed(e -> {
             this.getKeyboardInput(e, this.pacmanImageview);
         });
         this.currentDirection = "UP";
         this.moving = false;
+
+        this.pacmanImageview.setTranslateY(205);
 
 
     }
@@ -124,31 +111,23 @@ public class PacMan extends MovableEntity {
 
     public boolean collisionDetection(Rectangle[] mazeRect, ImageView pacman) {
 
-//        for (int i = 0; i < this.pacDots.length; i++) {
-//
-//            Bounds pacManBounds = pacman.getBoundsInParent();
-//
-//            if (pacManBounds.intersects(pacDotBounds[i])) {
-//                this.test.getChildren().remove(this.pacDots[i]);
-//                this.pacDotBounds[i] = null;
-//
-//                System.out.println("PACDOT HIT");
-//            }
-//        }
+        Bounds pacmanBounds = pacman.getBoundsInParent();
 
         for (int i = 1; i < mazeRect.length; i++) {
             Bounds mazeWall = mazeRect[i].getBoundsInParent();
-            Bounds pacmanBounds = pacman.getBoundsInParent();
 
             if (pacmanBounds.intersects(mazeWall)) {
-
                 return true;
             }
             if (pacmanBounds.intersects(this.ghostImageView.getBoundsInParent())) {
                 this.pacmanImageview.setViewport(new DeadPacMan().getSprite());
                 this.isDead = true;
                 this.moving = false;
-                System.out.println("Ghost Collision");
+            }
+            if (pacmanBounds.intersects(this.ghostImageView2.getBoundsInParent())) {
+                this.pacmanImageview.setViewport(new DeadPacMan().getSprite());
+                this.isDead = true;
+                this.moving = false;
             }
         }
 
@@ -156,13 +135,13 @@ public class PacMan extends MovableEntity {
         if (this.posX > (450 - 30)) {
             setDirection(DIRECTION.LEFT);
         }
-        if (this.posY > (300 - 25)) {
+        if (this.posY > (300 - 20)) {
             setDirection(DIRECTION.UP);
         }
         if (this.posX < (-450 + 30)) {
             setDirection(DIRECTION.RIGHT);
         }
-        if (this.posY < (-300 + 25)) {
+        if (this.posY < (-300 + 15)) {
             setDirection(DIRECTION.DOWN);
         }
 

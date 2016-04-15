@@ -18,22 +18,17 @@ public class PathDataLoader {
     public String getPathData(File pFile)
     {
         String pData = "";
-
         if(pFile.isFile()) {
             try (Scanner scan = new Scanner(pFile.getAbsoluteFile())) {
-
-                //TODO Verify that this does read the last line of the path data file
                 while(scan.hasNext()){
                     pData += scan.nextLine();
                 }
-
                 scan.close();
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
         }else{
         }
-        //TODO Modify appropriately
         return pData;
     }
 
