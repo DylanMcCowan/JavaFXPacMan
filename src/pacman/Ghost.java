@@ -25,6 +25,7 @@ public class Ghost extends MovableEntity
     String name;
     SVGPath svgPath;
     SVGPath spawnPath;
+    int SPAWN_PATH;
 
     FileLoader ftmp = new FileLoader();
     PathDataLoader pdl = new PathDataLoader();
@@ -94,7 +95,7 @@ public class Ghost extends MovableEntity
                 selectPath();
             case "INKY":
                 this.spawnPath.setContent(this.spawn_Path);
-                selectPath();
+               selectPath();
             case "CLYDE":
                 this.spawnPath.setContent(this.spawn_Path);
                 selectPath();
@@ -106,23 +107,27 @@ public class Ghost extends MovableEntity
     protected void selectPath(){
 
         Random rnd = new Random();
-        int path = rnd.nextInt(2);
+        int path = rnd.nextInt(3);
         switch(path){
             case 0:
                 this.svgPath = new SVGPath();
                 this.svgPath.setContent(pdl.getPathData(ftmp.loadPathFile("./src/assets/pathData/path1.txt")));
+                this.SPAWN_PATH = 0;
                 break;
             case 1:
                 this.svgPath = new SVGPath();
                 this.svgPath.setContent(pdl.getPathData(ftmp.loadPathFile("./src/assets/pathData/path2.txt")));
+                this.SPAWN_PATH = 1;
                 break;
             case 2:
                 this.svgPath = new SVGPath();
                 this.svgPath.setContent(pdl.getPathData(ftmp.loadPathFile("./src/assets/pathData/path3.txt")));
+                this.SPAWN_PATH = 2;
                 break;
             case 3:
                 this.svgPath = new SVGPath();
                 this.svgPath.setContent(pdl.getPathData(ftmp.loadPathFile("./src/assets/pathData/path4.txt")));
+                this.SPAWN_PATH = 3;
         }
     }
 }
