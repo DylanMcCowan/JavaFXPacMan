@@ -204,21 +204,27 @@ public class MazeLevel {
             if (this.pacDotBounds[i].intersects(this.pacManBounds)) {
                this.pacDotBounds[i] = null;
                 this.paneMaze.getChildren().remove(this.pacdots[i]);
-                this.pacdots[i].setFill(Color.RED);
                 System.out.println("Hmms");
 
             }
         }
-
-        if(this.pacdotCount == 0)
-        {
+        
+        int count= 0;
+        for(int i =0; i<this.pacdots.length;i++){
+            if(paneMaze.getChildren().contains(this.pacdots[i])){
+                
+            }
+            else{
+               count++; 
+            }
+            if(count==this.pacdots.length){
             this.tl.pause();
             this.pinkyPath.pause();
             this.pth.pause();
             System.out.println("YOU WIN! √_√");
+            }
         }
-        //System.out.println(this.pacdotCount);
-
+        
     }
 
     private Rectangle[] getMaze() {
