@@ -8,14 +8,15 @@ import javafx.geometry.Bounds;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.shape.SVGPath;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.util.Duration;
 
 /**
@@ -26,6 +27,9 @@ public class MazeLevel {
     //MazeScene
     private Scene maze;
     private StackPane paneMaze;
+
+    private Button bttnStart;
+    private Text ScoreBoard;
 
     //MazeData
     private Rectangle[] mazeData;
@@ -63,7 +67,6 @@ public class MazeLevel {
 
         this.spriteImage = getSpriteImagePath("assets/img/PacManSprite.png");
 
-
         this.blinky = new Ghost(GhostNames.BLINKY);
         this.blinkyImgView = new ImageView(this.spriteImage);
         this.blinkyImgView.setViewport(this.blinky.getSprite());
@@ -73,9 +76,10 @@ public class MazeLevel {
         this.pinkyImgView.setViewport(this.pinky.getSprite());
 
         this.pacManImgView = new ImageView(this.spriteImage);
-        this.pacMan = new PacMan(this.mazeData, this.blinkyImgView, this.paneMaze);
-        this.pacManImgView.setViewport(this.pacMan.getSprite());
+        this.pacMan = new PacMan(this.mazeData, this.blinkyImgView, this.pinkyImgView);
         this.pacMan.setup(this.pacManImgView);
+        this.pacManImgView.setViewport(this.pacMan.getSprite());
+
 
         this.pacDotBounds = new Bounds[this.pacdots.length];
 
@@ -83,19 +87,24 @@ public class MazeLevel {
             this.pacdots[i].setFill(Color.YELLOW);
             this.pacDotBounds[i] = this.pacdots[i].getBoundsInParent();
         }
-
         this.pacdotCount = this.pacdots.length;
+
+        this.bttnStart = new Button("Start Game!");
+        this.bttnStart.setLayoutX(this.paneMaze.getWidth() / 2 - 50);
+        this.bttnStart.setLayoutY(this.paneMaze.getHeight() / 2);
+
+        this.ScoreBoard = new Text();
+
+
+        ScoreBoard.setVisible(false);
+
 
         addToMaze(this.pacManImgView);
         addToMaze(this.blinkyImgView);
         addToMaze(this.pinkyImgView);
+        addToMaze(this.bttnStart);
+        addToMaze(this.ScoreBoard);
 
-
-        this.blinky.svgPath.setTranslateX(-440);
-        this.blinky.svgPath.setTranslateY(-295);
-
-        this.pinky.svgPath.setTranslateX(-440);
-        this.pinky.svgPath.setTranslateY(-295);
 
         //Path Transition and Controlling Sprites
         this.pth = new PathTransition();
@@ -105,13 +114,17 @@ public class MazeLevel {
         this.pinkyPath = new PathTransition();
         this.pinkyPath.setNode(this.pinkyImgView);
         this.pinkyPath.setPath(this.pinky.svgPath);
-        //TODO FIX THIS
-        if(this.pinkyPath.getNode().equals(this.pth.getNode()))
-        {
+
+        while(this.pinky.SPAWN_PATH == this.blinky.SPAWN_PATH) {
             this.pinky.selectPath();
             this.pinkyPath.setPath(this.pinky.svgPath);
-            System.out.println("PREVENT!");
         }
+
+        this.blinky.svgPath.setTranslateX(-440);
+        this.blinky.svgPath.setTranslateY(-295);
+
+        this.pinky.svgPath.setTranslateX(-440);
+        this.pinky.svgPath.setTranslateY(-295);
 
         this.pinkyPath.setInterpolator(Interpolator.LINEAR);
         this.pinkyPath.setDuration(Duration.seconds(25));
@@ -122,9 +135,6 @@ public class MazeLevel {
         this.pth.setDuration(Duration.seconds(25));
         this.pth.setCycleCount(Timeline.INDEFINITE);
         this.pth.setAutoReverse(true);
-
-        this.pinkyPath.play();
-        this.pth.play();
 
         this.maze = new Scene(this.paneMaze, 900, 600);
 
@@ -140,10 +150,9 @@ public class MazeLevel {
         this.tl.setCycleCount(Timeline.INDEFINITE);
         this.tl.setRate(2.0);
 
-        this.tl.play();
-
-
-        this.pacManImgView.requestFocus();
+        this.bttnStart.setOnMouseClicked(e -> { this.bttnStart.setVisible(false); this.tl.play(); this.pinkyPath.play();
+            this.pth.play();
+            this.pacManImgView.requestFocus();} );
 
     }
 
@@ -160,11 +169,9 @@ public class MazeLevel {
 
     }
 
-    //TODO  only return the sprite for the Maze
+    @Deprecated
     private Rectangle2D getMazeSprite() {
-        //For Experimental purposes only, hardcoded to load the rect related to the main map itself. (0,5),(490,545)
         return new Rectangle2D(0, 5, 490, 540);
-
     }
 
     public StackPane generateMazeLevel() {
@@ -200,8 +207,6 @@ public class MazeLevel {
             if (this.pacDotBounds[i].intersects(this.pacManBounds)) {
                 this.pacDotBounds[i] = null;
                 this.paneMaze.getChildren().remove(this.pacdots[i]);
-                System.out.println("Hmms");
-
             }
         }
 
@@ -218,6 +223,25 @@ public class MazeLevel {
                 this.pth.pause();
                 System.out.println("YOU WIN! √_√");
             }
+
+
+        }
+
+        if (count == this.pacdots.length) {
+            this.tl.pause();
+            this.pinkyPath.pause();
+            this.pth.pause();
+            System.out.println("YOU WIN! √_√");
+            ScoreBoard.setText("YOU WIN");
+            ScoreBoard.setFill(Color.WHITE);
+            ScoreBoard.setFont(Font.font(32));
+            ScoreBoard.setVisible(true);
+        }
+        if (this.pacMan.isDead) {
+            ScoreBoard.setText("GHOST WIN");
+            ScoreBoard.setFill(Color.WHITE);
+            ScoreBoard.setFont(Font.font(32));
+            ScoreBoard.setVisible(true);
         }
 
     }
