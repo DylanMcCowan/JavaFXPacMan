@@ -27,8 +27,7 @@ public class MazeLevel {
     //MazeScene
     private Scene maze;
     private StackPane paneMaze;
-
-    private Button bttnStart;
+    private StartMenu start;
     private Text scoreBoard;
 
     //MazeData
@@ -46,7 +45,6 @@ public class MazeLevel {
     private Ghost pinky;
     private ImageView pinkyImgView;
 
-
     //ANIMATION
     Timeline tl;
     KeyFrame kf;
@@ -63,8 +61,13 @@ public class MazeLevel {
 
         this.mazeData = getMaze();
         this.paneMaze = generateMazeLevel();
+        this.start = new StartMenu();
+
 
         this.paneMaze.setStyle("-fx-background-color: black");
+
+
+        this.paneMaze.setVisible(true);
 
         this.spriteImage = getSpriteImagePath("assets/img/PacManSprite.png");
 
@@ -90,10 +93,6 @@ public class MazeLevel {
         }
         this.pacdotCount = this.pacdots.length;
 
-        this.bttnStart = new Button("Start Game!");
-        this.bttnStart.setLayoutX(this.paneMaze.getWidth() / 2 - 50);
-        this.bttnStart.setLayoutY(this.paneMaze.getHeight() / 2);
-
         this.scoreBoard = new Text();
         scoreBoard.setVisible(false);
 
@@ -101,9 +100,8 @@ public class MazeLevel {
         addToMaze(this.pacManImgView);
         addToMaze(this.blinkyImgView);
         addToMaze(this.pinkyImgView);
-        addToMaze(this.bttnStart);
         addToMaze(this.scoreBoard);
-
+        this.paneMaze.getChildren().add(this.start);
 
         //Path Transition and Controlling Sprites
         this.pth = new PathTransition();
@@ -141,19 +139,28 @@ public class MazeLevel {
 
         //TIMELINE AND KEYFRAME
         this.kf = new KeyFrame(Duration.millis(150), e -> {
-            checkPacDots();
-            this.pacMan.update();
-            this.pacMan.posX = this.pacManImgView.getTranslateX();
-            this.pacMan.posY = this.pacManImgView.getTranslateY();
+            if(this.start.checkBegin()) {
+                this.pacManImgView.requestFocus();
+                checkPacDots();
+                this.pacMan.update();
+                this.pacMan.posX = this.pacManImgView.getTranslateX();
+                this.pacMan.posY = this.pacManImgView.getTranslateY();
+
+
+            }
+
         });
         this.tl = new Timeline();
         this.tl.getKeyFrames().add(this.kf);
         this.tl.setCycleCount(Timeline.INDEFINITE);
         this.tl.setRate(2.0);
 
-        this.bttnStart.setOnMouseClicked(e -> { this.bttnStart.setVisible(false); this.tl.play(); this.pinkyPath.play();
-            this.pth.play();
-            this.pacManImgView.requestFocus();} );
+        this.tl.play();
+        this.pth.play();
+        this.pinkyPath.play();
+
+
+
 
     }
 
@@ -263,3 +270,4 @@ public class MazeLevel {
 
 
 }
+

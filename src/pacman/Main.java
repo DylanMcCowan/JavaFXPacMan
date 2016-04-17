@@ -13,6 +13,8 @@ public class Main extends Application
 
     public void start (Stage stage)
     {
+        stage.setTitle("JavaFX PacMan");
+        stage.setResizable(false);
         this.level = new MazeLevel();
         stage.setScene(this.level.getScene());
         stage.show();
