@@ -5,8 +5,11 @@ import javafx.geometry.Bounds;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.shape.Rectangle;
 
+import java.net.URL;
 enum DIRECTION {
     UP, DOWN, LEFT, RIGHT
 }
@@ -27,6 +30,15 @@ public class PacMan extends MovableEntity {
     ImageView ghostImageView;
     ImageView ghostImageView2;
 
+    URL path = PacMan.class.getResource("../assets/sounds/Wakawaka.mp3");
+    Media media = new Media(path.toString());
+    MediaPlayer pacManSound = new MediaPlayer(media);
+
+    URL deathSoundPath = PacMan.class.getResource("../assets/sounds/RipPacman.mp3");
+    Media deathMedia = new Media(deathSoundPath.toString());
+    MediaPlayer pacManDead = new MediaPlayer(deathMedia);
+
+
     //movement
     boolean moving;
     private String currentDirection;
@@ -46,9 +58,9 @@ public class PacMan extends MovableEntity {
             this.getKeyboardInput(e, this.pacmanImageview);
         });
 
+        this.pacManSound.setCycleCount(Integer.MAX_VALUE);
         this.currentDirection = "UP";
         this.moving = false;
-
         this.pacmanImageview.setTranslateY(205);
 
 
@@ -80,18 +92,24 @@ public class PacMan extends MovableEntity {
                 switch (this.currentDirection) {
                     case "UP":
                         moveUp(this.pacmanImageview);
+                        pacManSound.play();
+
                         break;
                     case "DOWN":
                         moveDown(this.pacmanImageview);
+                        pacManSound.play();
                         break;
                     case "LEFT":
                         moveToLeft(this.pacmanImageview);
+                        pacManSound.play();
                         break;
                     case "RIGHT":
                         moveToRight(this.pacmanImageview);
+                        pacManSound.play();
                         break;
                     default:
                         System.out.println("ERROR Default");
+                        pacManSound.play();
                         break;
 
                 }
@@ -99,6 +117,7 @@ public class PacMan extends MovableEntity {
         } else {
 
         }
+
         collisionDetection(this.mazeRect, this.pacmanImageview);
 
     }
@@ -117,11 +136,15 @@ public class PacMan extends MovableEntity {
                 this.pacmanImageview.setViewport(new DeadPacMan().getSprite());
                 this.isDead = true;
                 this.moving = false;
+                this.pacManDead.play();
+                this.pacManSound.stop();
             }
             if (pacmanBounds.intersects(this.ghostImageView2.getBoundsInParent())) {
                 this.pacmanImageview.setViewport(new DeadPacMan().getSprite());
                 this.isDead = true;
                 this.moving = false;
+                this.pacManDead.play();
+                this.pacManSound.stop();
             }
         }
 
@@ -165,7 +188,6 @@ public class PacMan extends MovableEntity {
     private String getDirection() {
         return this.currentDirection;
     }
-
 
     private void moveToLeft(ImageView imgView) {
         imgView.setTranslateX(imgView.getTranslateX() - 10);
