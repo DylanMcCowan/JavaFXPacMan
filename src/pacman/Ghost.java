@@ -21,19 +21,29 @@ enum GhostNames
  */
 public class Ghost extends MovableEntity
 {
+    //TODO MAKE ALL OF THESE PRIVATE
     boolean isVisible;
     String name;
+
+    /*
+    TODO Reduce dependency on SVGPath and develop systems capable of moving the ghosts in another fashion, as found in traditional pacman
+     */
+
     SVGPath svgPath;
     SVGPath spawnPath;
     int SPAWN_PATH;
 
+    //TODO Adapt and implement static versions of these methods
     FileLoader ftmp = new FileLoader();
     PathDataLoader pdl = new PathDataLoader();
 
+    //TODO Reduce need for this spawn path, will become obsolete after Ghosts no longer use SVGPath Data
    final String spawn_Path;
 
+   //TODO Clean up the Ghost Constructor and implement improved file handling methods
     public Ghost (Enum GHOST_NAME)
     {
+
         this.setId(GHOST_NAME.name());
         this.svgPath = new SVGPath();
         this.spawnPath = new SVGPath();
@@ -45,7 +55,7 @@ public class Ghost extends MovableEntity
     }
 
     @Override
-     public void setId (String name)
+     public void setId (String name) //TODO Do better data validation
     {
         this.name = name;
     }
@@ -53,7 +63,7 @@ public class Ghost extends MovableEntity
     @Override
     public Rectangle2D getSprite() {
 
-        switch(this.getId())
+        switch(this.getId()) //TODO Review selection of sprites
         {
             case "BLINKY":
                 return new Rectangle2D(615, 117, 32,32);
@@ -64,7 +74,7 @@ public class Ghost extends MovableEntity
             case "CLYDE":
                 return new Rectangle2D(615, 45, 32,32);
             default:
-                return new Rectangle2D(585, 230, 32,32);
+                return new Rectangle2D(585, 230, 32,32); //TODO Change this to something appropriate
         }
     }
 
@@ -80,12 +90,13 @@ public class Ghost extends MovableEntity
     }
 
     @Override
-    public void update ()
+    public void update () //TODO Develop and implement this method properly as designed for MovableEntity
     {
         throw new UnsupportedOperationException("Not supported yet.");
     }
-    
-    private void setInitialPath(){
+
+    @Deprecated
+    private void setInitialPath(){ //TODO Remove this method when no longer dependant on Ghosts using SVGPath Data
         switch(this.getId()){
             case "BLINKY":
                 this.spawnPath.setContent(this.spawn_Path);

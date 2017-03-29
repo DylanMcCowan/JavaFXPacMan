@@ -6,6 +6,10 @@ import javafx.stage.Stage;
 
 /**
  * Created by on 2016-04-01.
+ *
+ * Main.java
+ *
+ * Loads the application and initalized the launching of the game
  */
 public class Main extends Application
 {

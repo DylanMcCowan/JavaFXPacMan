@@ -8,6 +8,13 @@ import javafx.scene.shape.Rectangle;
 
 /**
  * Created by dylan on 2016-04-11.
+ *
+ * MazeData.java
+ *
+ * A file responsible for creating and operating the components of the Maze. Such as the Maze wall locations
+ * and related rectangles
+ *
+ * This will produce a StackPane containing all components of the Maze for use in the game window
  */
 public class MazeData {
 
@@ -18,10 +25,12 @@ public class MazeData {
         this.mazeDataPane = generateMaze(generateMazeData());
     }
 
+    //TODO Check usages in game code
     public StackPane getMazeDataPane() {
         return this.mazeDataPane;
     }
 
+    //TODO Redevelop this entire method and optimize the code
     public static Rectangle[] generateMazeData() {
 
         StackPane mazeDataPane = new StackPane();
@@ -102,7 +111,7 @@ public class MazeData {
         l19.setFill(Color.BLUE);
         l19.setTranslateY(-215);
 
-//TODO FIX THIS HORRIBLE THING WHERE I STARTS AT 1
+        //TODO Optimize this inefficient code
         for (int i = 1; i < mazeRect.length; i++) {
             switch (i) {
                 case 1:
@@ -136,7 +145,7 @@ public class MazeData {
                     mazeRect[i] = l10;
                     break;
                 case 11:
-                    //mistake, no rectangle l11
+                    //TODO mistake, no rectangle l11 check variables
                     mazeRect[i] = l19;
                     break;
                 case 12:
@@ -168,6 +177,7 @@ public class MazeData {
         return mazeRect;
     }
 
+    //TODO Look for ways to improve this code
     public static StackPane generateMaze(Rectangle[] mazeRectData) {
         StackPane mazeDataPane = new StackPane();
 

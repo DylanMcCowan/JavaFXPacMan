@@ -21,6 +21,13 @@ import javafx.util.Duration;
 
 /**
  * Created by dylan on 2016-04-03.
+ *
+ * MazeLevel.java
+ *
+ * This is responsible for creating all level and game technical and interactive components:
+ * Buttons, PacDots, Text, Collision Boundaries, Entities & Related Image / ImageView
+ *
+ * Also the SVG Path data movement and animation + timeline is handled with this file
  */
 public class MazeLevel {
 
@@ -37,7 +44,7 @@ public class MazeLevel {
     private Bounds[] pacDotBounds;
     private Bounds pacManBounds;
 
-    //TODO Use an Array for the PacDots and Ghosts.
+    //TODO Use an Array for the Ghosts - See about Array for ImageViews
     //Maze Entities
     private PacMan pacMan;
     private ImageView pacManImgView;
@@ -47,6 +54,7 @@ public class MazeLevel {
     private ImageView pinkyImgView;
 
     //ANIMATION
+    //TODO These need to be private
     Timeline tl;
     KeyFrame kf;
     PathTransition pth;
@@ -58,6 +66,7 @@ public class MazeLevel {
     //Level PacDot Number Count
     protected int pacdotCount;
 
+    //TODO Review and optimize this constructor and separate out old / unnecessary code
     public MazeLevel() {
 
         this.mazeData = getMaze();
@@ -98,7 +107,7 @@ public class MazeLevel {
 
         ScoreBoard.setVisible(false);
 
-
+        //TODO Streamline this operation
         addToMaze(this.pacManImgView);
         addToMaze(this.blinkyImgView);
         addToMaze(this.pinkyImgView);
@@ -106,7 +115,7 @@ public class MazeLevel {
         addToMaze(this.ScoreBoard);
 
 
-        //Path Transition and Controlling Sprites
+        //TODO Phase out all SVGPath dependencies
         this.pth = new PathTransition();
         this.pth.setNode(this.blinkyImgView);
         this.pth.setPath(this.blinky.svgPath);
@@ -194,6 +203,7 @@ public class MazeLevel {
         return tmpMazePane;
     }
 
+    //TODO Review how PacDots are checked and bounds removed, updated & Calculated
     private void checkPacDots() {
 
         this.pacManBounds = this.pacManImgView.getBoundsInParent();

@@ -8,10 +8,11 @@ import java.io.File;
  */
 public class FileLoader {
 
-    //TODO Perhaps look into making this a Static class for utility sake
+    //TODO Make this a static utility class. Implement proper exceptions & constructors
     public FileLoader()
     {
     }
+
 
     public File loadPathFile(String pathName)
     {
@@ -19,6 +20,7 @@ public class FileLoader {
         return tmpLoad;
 
     }
+
 
     public File loadImageFile(String imagePathName)
     {

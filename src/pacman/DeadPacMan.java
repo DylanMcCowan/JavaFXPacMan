@@ -12,17 +12,12 @@ public class DeadPacMan implements Entity
     boolean isVisible;
     String name;
 
-    public DeadPacMan ()
-    {
-
-    }
 
     public void setId (String name)
     {
         this.name = name;
     }
 
-    //TODO Insert Correct Sprite Bounds
     @Override
     public Rectangle2D getSprite() {
         return new Rectangle2D(585, 230, 32,32);
@@ -38,7 +33,6 @@ public class DeadPacMan implements Entity
     {
         return this.isVisible;
     }
-
 
     @Override
     public void update ()

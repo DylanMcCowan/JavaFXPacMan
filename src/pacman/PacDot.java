@@ -7,6 +7,10 @@ import javafx.scene.shape.Circle;
 /**
  *
  * @author KevinCamp
+ *
+ * PacDot.java
+ *
+ * Class responsible for handling PacDot creation from sprite and data on the grid for the Maze
  */
 public class PacDot implements Entity
 {
@@ -150,7 +154,7 @@ public class PacDot implements Entity
         return this.isVisible;
     }
 
-    @Override
+    @Override //TODO Implement this functionality
     public void update ()
     {
         throw new UnsupportedOperationException("Not supported yet.");

@@ -7,14 +7,17 @@ import javafx.geometry.Rectangle2D;
  */
 public interface Entity
 {
+    boolean isVisible (); //Check to see if something is currently visible
 
-    boolean isVisible ();
+    void update (); //TODO Allow implementation for updating all entity functionality
 
-    void update ();
+    String getId (); //Return the related entity id
 
-    String getId ();
+    void setId (String name); //Set the entity ID
 
-    void setId (String name);
-
+    /*
+    Return the appropriate Rectangle2D block selecting the desired sprite from
+    the sprite sheet.
+     */
     public Rectangle2D getSprite();
 }
