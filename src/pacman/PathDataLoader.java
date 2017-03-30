@@ -2,20 +2,20 @@ package pacman;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.util.Scanner;
 
 /**
- * Created by dylan on 2016-04-03.
+ * Created by Dylan on 2016-04-03.
+ *
+ * PathDataLoader.java
+ *
+ * This file is responsible for reading in SVGPath Data content for use in the maze
  */
 public class PathDataLoader {
 
-    public PathDataLoader()
-    {
-    }
 
     //TODO Redevelop this so it doesn't suck
-    public String getPathData(File pFile)
+    public static String getPathData(File pFile)
     {
         String pData = "";
         if(pFile.isFile()) {
@@ -25,13 +25,20 @@ public class PathDataLoader {
                 }
                 scan.close();
             } catch (FileNotFoundException e) {
-                e.printStackTrace();
+                System.out.println("An error loading the file has occurred: " + e.getLocalizedMessage());
+            }catch(Exception ex)
+            {
+                System.out.println("An runtime error has occurred: " + ex.getLocalizedMessage());
             }
         }else{
+            try {
+                throw new Exception("Invalid File Exception");
+            } catch (Exception e) {
+                e.printStackTrace();
+                System.out.println("File selected is not a file!");
+            }
+
         }
         return pData;
     }
-
-
-
 }

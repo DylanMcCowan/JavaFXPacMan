@@ -54,14 +54,14 @@ public class MazeLevel {
     private ImageView pinkyImgView;
 
     //ANIMATION
-    //TODO These need to be private
-    Timeline tl;
-    KeyFrame kf;
-    PathTransition pth;
-    PathTransition pinkyPath;
+
+    private Timeline tl;
+    private KeyFrame kf;
+    private PathTransition pth;
+   private PathTransition pinkyPath;
 
     //MAIN SPRITE IMAGE
-    Image spriteImage;
+    private Image spriteImage;
 
     //Level PacDot Number Count
     protected int pacdotCount;
@@ -169,13 +169,10 @@ public class MazeLevel {
         this.paneMaze.getChildren().add(object);
     }
 
-    //This should load the PacManSprite.png file generally...
+    //This should load the PacManSprite.png file
     private Image getSpriteImagePath(String path) {
-        //Should get around to making this FileLoader class static...
-        FileLoader f = new FileLoader();
-        Image tmpImage = new Image(f.loadImageFile(path).getPath());
-        return tmpImage;
 
+       return new Image(FileLoader.loadImageFile(path).toString());
     }
 
     @Deprecated

@@ -33,10 +33,6 @@ public class Ghost extends MovableEntity
     SVGPath spawnPath;
     int SPAWN_PATH;
 
-    //TODO Adapt and implement static versions of these methods
-    FileLoader ftmp = new FileLoader();
-    PathDataLoader pdl = new PathDataLoader();
-
     //TODO Reduce need for this spawn path, will become obsolete after Ghosts no longer use SVGPath Data
    final String spawn_Path;
 
@@ -49,7 +45,7 @@ public class Ghost extends MovableEntity
         this.spawnPath = new SVGPath();
 
 
-       this.spawn_Path = pdl.getPathData(ftmp.loadPathFile("./src/assets/pathData/spawnPath.txt"));
+       this.spawn_Path = PathDataLoader.getPathData(FileLoader.loadPathFile("./src/assets/pathData/spawnPath.txt"));
 
         setInitialPath();
     }
@@ -122,22 +118,22 @@ public class Ghost extends MovableEntity
         switch(path){
             case 0:
                 this.svgPath = new SVGPath();
-                this.svgPath.setContent(pdl.getPathData(ftmp.loadPathFile("./src/assets/pathData/path1.txt")));
+                this.svgPath.setContent(PathDataLoader.getPathData(FileLoader.loadPathFile("./src/assets/pathData/path1.txt")));
                 this.SPAWN_PATH = 0;
                 break;
             case 1:
                 this.svgPath = new SVGPath();
-                this.svgPath.setContent(pdl.getPathData(ftmp.loadPathFile("./src/assets/pathData/path2.txt")));
+                this.svgPath.setContent(PathDataLoader.getPathData(FileLoader.loadPathFile("./src/assets/pathData/path2.txt")));
                 this.SPAWN_PATH = 1;
                 break;
             case 2:
                 this.svgPath = new SVGPath();
-                this.svgPath.setContent(pdl.getPathData(ftmp.loadPathFile("./src/assets/pathData/path3.txt")));
+                this.svgPath.setContent(PathDataLoader.getPathData(FileLoader.loadPathFile("./src/assets/pathData/path3.txt")));
                 this.SPAWN_PATH = 2;
                 break;
             case 3:
                 this.svgPath = new SVGPath();
-                this.svgPath.setContent(pdl.getPathData(ftmp.loadPathFile("./src/assets/pathData/path4.txt")));
+                this.svgPath.setContent(PathDataLoader.getPathData(FileLoader.loadPathFile("./src/assets/pathData/path4.txt")));
                 this.SPAWN_PATH = 3;
         }
     }

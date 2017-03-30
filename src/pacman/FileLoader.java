@@ -14,18 +14,15 @@ public class FileLoader {
     }
 
 
-    public File loadPathFile(String pathName)
+    public static File loadPathFile(String pathName)
     {
-        File tmpLoad = new File(pathName);
-        return tmpLoad;
-
+        return new File(pathName);
     }
 
 
-    public File loadImageFile(String imagePathName)
+    public static File loadImageFile(String imagePathName)
     {
-        File tmpImage = new File(imagePathName);
-        return tmpImage;
+        return new File(imagePathName);
     }
 
 }
